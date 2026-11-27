@@ -1,0 +1,6 @@
+    studying:
+      per_event_duration: {min: 120, max: 240, unit: minutes}
+      total_event_duration: {scale: day, min: 240, max: 420, unit: minutes}
+      total_event_episodes: {scale: day, min: 2, max: 3}
+      temporal_patterns:
+      - {mode: fix, details: {within: [morning, afternoon]}}

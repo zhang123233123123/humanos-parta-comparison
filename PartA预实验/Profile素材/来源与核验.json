@@ -1,0 +1,61 @@
+{
+  "source_sha256": {
+    "服务器数据备份/2026-10-26_095252/服务器业务数据备份-20261026T015252Z/server-files/root/humanos-simplified/shared/participant-labels.json": "d853efe8c149eac26483e5ce68d67e15ac772971c55c1cdc189ccdbf8d4b6f22",
+    "实验历史记录/Profile填写核对/profile_match_v1/profile_snapshots.json": "ad49ff4b247cf54d9f2c8a641da93d418f80f35e5070cf0f71b6824adb21016e",
+    "服务器数据备份/2026-10-31_只读复核/snapshot/databases/root/humanos-simplified/shared/simple.sqlite3": "29814d976e713dac5385326ea81b6f6260490b5815b9b9dcd79776e1d9951a40",
+    "服务器数据备份/2026-10-31_只读复核/snapshot/databases/root/humanos-simplified-baseline/shared/simple.sqlite3": "1b71e5772d776f4a529ca5047d2fab8f9851645346806e3218480de08e7d61c6"
+  },
+  "source_databases_opened_read_only": true,
+  "source_hashes_unchanged": true,
+  "profile_records": 36,
+  "unique_participants": 18,
+  "first_phase_records": 18,
+  "all_first_submissions_match_previous_archive": true,
+  "historical_cohort": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "B16",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "B21",
+    "B22",
+    "B23",
+    "B24"
+  ],
+  "other_submitted_accounts": [
+    "B30",
+    "A14"
+  ],
+  "phase1_day_energy_matches_default_count": 3,
+  "phase1_null_switch_count": 2,
+  "exported_profile_fields": [
+    "session_minutes",
+    "break_minutes",
+    "preferences",
+    "keep_buffer",
+    "personal_profile"
+  ],
+  "not_exported": [
+    "email",
+    "name",
+    "password_hash",
+    "salt",
+    "user_id",
+    "peer_user_id",
+    "activity_drafts",
+    "weekly_goal",
+    "daily_state",
+    "outcome_ratings"
+  ],
+  "first_day_time_context_exported": true,
+  "scope": "原正式实验18人队列完整导出，未套用此前14人敏感性排除、未使用六人模拟补充数据；空值不补默认。"
+}

@@ -1,0 +1,482 @@
+[
+  {
+    "participant": "A01",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A01",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A02",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A02",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A03",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A03",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A04",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A04",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A05",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A05",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A06",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A06",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A07",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A07",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A08",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A08",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A09",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A09",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "A10",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A10",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A11",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A11",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A12",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A12",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A13",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A13",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A14",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A14",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A15",
+    "phase": 1,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "A15",
+    "phase": 2,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B16",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B16",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B17",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B17",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B18",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B18",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B19",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B19",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B20",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B20",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B21",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B21",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B22",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B22",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B23",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B23",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B24",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B24",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": true,
+    "included": true,
+    "reason": "既有正式实验18人队列"
+  },
+  {
+    "participant": "B25",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B25",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B26",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B26",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B27",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B27",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B28",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B28",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B29",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B29",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B30",
+    "phase": 1,
+    "system": "humanos",
+    "has_setup_submission": true,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  },
+  {
+    "participant": "B30",
+    "phase": 2,
+    "system": "baseline",
+    "has_setup_submission": false,
+    "included": false,
+    "reason": "不属于既有18人正式队列；不据此判断回答质量"
+  }
+]

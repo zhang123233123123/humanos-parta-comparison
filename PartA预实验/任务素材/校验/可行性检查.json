@@ -1,0 +1,566 @@
+[
+  {
+    "scenario_id": "S1-L",
+    "task_count": 5,
+    "work_minutes": 240,
+    "net_available_minutes": 390,
+    "spare_minutes": 150,
+    "workload_ratio": 0.6154,
+    "feasible_non_split_orders": 120,
+    "orders_tested": 120,
+    "example_feasible_schedules": [
+      [
+        {
+          "task_id": "S1-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S1-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S1-03",
+          "start": "13:00",
+          "end": "13:45"
+        },
+        {
+          "task_id": "S1-04",
+          "start": "14:15",
+          "end": "15:15"
+        },
+        {
+          "task_id": "S1-05",
+          "start": "15:15",
+          "end": "15:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S1-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S1-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S1-03",
+          "start": "13:00",
+          "end": "13:45"
+        },
+        {
+          "task_id": "S1-05",
+          "start": "14:15",
+          "end": "14:45"
+        },
+        {
+          "task_id": "S1-04",
+          "start": "14:45",
+          "end": "15:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S1-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S1-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S1-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S1-03",
+          "start": "14:15",
+          "end": "15:00"
+        },
+        {
+          "task_id": "S1-05",
+          "start": "15:00",
+          "end": "15:30"
+        }
+      ]
+    ],
+    "interpretation": "仅验证不拆分、各排列尽早放置时存在可行解；不是所有可行日程计数，不是最佳或个性化结果。"
+  },
+  {
+    "scenario_id": "S1-T",
+    "task_count": 5,
+    "work_minutes": 240,
+    "net_available_minutes": 270,
+    "spare_minutes": 30,
+    "workload_ratio": 0.8889,
+    "feasible_non_split_orders": 7,
+    "orders_tested": 120,
+    "example_feasible_schedules": [
+      [
+        {
+          "task_id": "S1-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S1-03",
+          "start": "09:45",
+          "end": "10:30"
+        },
+        {
+          "task_id": "S1-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S1-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S1-05",
+          "start": "14:15",
+          "end": "14:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S1-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S1-05",
+          "start": "09:45",
+          "end": "10:15"
+        },
+        {
+          "task_id": "S1-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S1-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S1-03",
+          "start": "14:15",
+          "end": "15:00"
+        }
+      ],
+      [
+        {
+          "task_id": "S1-02",
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "task_id": "S1-01",
+          "start": "10:45",
+          "end": "11:30"
+        },
+        {
+          "task_id": "S1-05",
+          "start": "11:30",
+          "end": "12:00"
+        },
+        {
+          "task_id": "S1-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S1-03",
+          "start": "14:15",
+          "end": "15:00"
+        }
+      ]
+    ],
+    "interpretation": "仅验证不拆分、各排列尽早放置时存在可行解；不是所有可行日程计数，不是最佳或个性化结果。"
+  },
+  {
+    "scenario_id": "S2-L",
+    "task_count": 5,
+    "work_minutes": 240,
+    "net_available_minutes": 390,
+    "spare_minutes": 150,
+    "workload_ratio": 0.6154,
+    "feasible_non_split_orders": 120,
+    "orders_tested": 120,
+    "example_feasible_schedules": [
+      [
+        {
+          "task_id": "S2-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S2-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S2-03",
+          "start": "13:00",
+          "end": "13:45"
+        },
+        {
+          "task_id": "S2-04",
+          "start": "14:15",
+          "end": "15:15"
+        },
+        {
+          "task_id": "S2-05",
+          "start": "15:15",
+          "end": "15:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S2-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S2-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S2-03",
+          "start": "13:00",
+          "end": "13:45"
+        },
+        {
+          "task_id": "S2-05",
+          "start": "14:15",
+          "end": "14:45"
+        },
+        {
+          "task_id": "S2-04",
+          "start": "14:45",
+          "end": "15:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S2-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S2-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S2-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S2-03",
+          "start": "14:15",
+          "end": "15:00"
+        },
+        {
+          "task_id": "S2-05",
+          "start": "15:00",
+          "end": "15:30"
+        }
+      ]
+    ],
+    "interpretation": "仅验证不拆分、各排列尽早放置时存在可行解；不是所有可行日程计数，不是最佳或个性化结果。"
+  },
+  {
+    "scenario_id": "S2-T",
+    "task_count": 5,
+    "work_minutes": 240,
+    "net_available_minutes": 270,
+    "spare_minutes": 30,
+    "workload_ratio": 0.8889,
+    "feasible_non_split_orders": 7,
+    "orders_tested": 120,
+    "example_feasible_schedules": [
+      [
+        {
+          "task_id": "S2-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S2-03",
+          "start": "09:45",
+          "end": "10:30"
+        },
+        {
+          "task_id": "S2-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S2-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S2-05",
+          "start": "14:15",
+          "end": "14:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S2-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S2-05",
+          "start": "09:45",
+          "end": "10:15"
+        },
+        {
+          "task_id": "S2-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S2-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S2-03",
+          "start": "14:15",
+          "end": "15:00"
+        }
+      ],
+      [
+        {
+          "task_id": "S2-02",
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "task_id": "S2-01",
+          "start": "10:45",
+          "end": "11:30"
+        },
+        {
+          "task_id": "S2-05",
+          "start": "11:30",
+          "end": "12:00"
+        },
+        {
+          "task_id": "S2-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S2-03",
+          "start": "14:15",
+          "end": "15:00"
+        }
+      ]
+    ],
+    "interpretation": "仅验证不拆分、各排列尽早放置时存在可行解；不是所有可行日程计数，不是最佳或个性化结果。"
+  },
+  {
+    "scenario_id": "S3-L",
+    "task_count": 5,
+    "work_minutes": 240,
+    "net_available_minutes": 390,
+    "spare_minutes": 150,
+    "workload_ratio": 0.6154,
+    "feasible_non_split_orders": 120,
+    "orders_tested": 120,
+    "example_feasible_schedules": [
+      [
+        {
+          "task_id": "S3-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S3-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S3-03",
+          "start": "13:00",
+          "end": "13:45"
+        },
+        {
+          "task_id": "S3-04",
+          "start": "14:15",
+          "end": "15:15"
+        },
+        {
+          "task_id": "S3-05",
+          "start": "15:15",
+          "end": "15:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S3-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S3-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S3-03",
+          "start": "13:00",
+          "end": "13:45"
+        },
+        {
+          "task_id": "S3-05",
+          "start": "14:15",
+          "end": "14:45"
+        },
+        {
+          "task_id": "S3-04",
+          "start": "14:45",
+          "end": "15:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S3-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S3-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S3-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S3-03",
+          "start": "14:15",
+          "end": "15:00"
+        },
+        {
+          "task_id": "S3-05",
+          "start": "15:00",
+          "end": "15:30"
+        }
+      ]
+    ],
+    "interpretation": "仅验证不拆分、各排列尽早放置时存在可行解；不是所有可行日程计数，不是最佳或个性化结果。"
+  },
+  {
+    "scenario_id": "S3-T",
+    "task_count": 5,
+    "work_minutes": 240,
+    "net_available_minutes": 270,
+    "spare_minutes": 30,
+    "workload_ratio": 0.8889,
+    "feasible_non_split_orders": 7,
+    "orders_tested": 120,
+    "example_feasible_schedules": [
+      [
+        {
+          "task_id": "S3-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S3-03",
+          "start": "09:45",
+          "end": "10:30"
+        },
+        {
+          "task_id": "S3-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S3-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S3-05",
+          "start": "14:15",
+          "end": "14:45"
+        }
+      ],
+      [
+        {
+          "task_id": "S3-01",
+          "start": "09:00",
+          "end": "09:45"
+        },
+        {
+          "task_id": "S3-05",
+          "start": "09:45",
+          "end": "10:15"
+        },
+        {
+          "task_id": "S3-02",
+          "start": "10:45",
+          "end": "11:45"
+        },
+        {
+          "task_id": "S3-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S3-03",
+          "start": "14:15",
+          "end": "15:00"
+        }
+      ],
+      [
+        {
+          "task_id": "S3-02",
+          "start": "09:00",
+          "end": "10:00"
+        },
+        {
+          "task_id": "S3-01",
+          "start": "10:45",
+          "end": "11:30"
+        },
+        {
+          "task_id": "S3-05",
+          "start": "11:30",
+          "end": "12:00"
+        },
+        {
+          "task_id": "S3-04",
+          "start": "13:00",
+          "end": "14:00"
+        },
+        {
+          "task_id": "S3-03",
+          "start": "14:15",
+          "end": "15:00"
+        }
+      ]
+    ],
+    "interpretation": "仅验证不拆分、各排列尽早放置时存在可行解；不是所有可行日程计数，不是最佳或个性化结果。"
+  }
+]

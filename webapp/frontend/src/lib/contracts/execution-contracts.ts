@@ -1,0 +1,224 @@
+import type { ChoiceSnapshot, ChoiceStatus } from './recommendation-choice'
+
+export type ExecutionStatus = 'ready' | 'running' | 'paused' | 'ended' | 'completed' | 'superseded' | string
+export type ExecutionMode = 'up_next' | 'ready_to_start' | 'running' | 'overdue_running' | 'paused' | 'session_ended' | 'empty' | 'none' | 'idle' | string
+export type InterruptionAction = 'short_break' | 'continue_later' | 'switch_task' | 'help_decide'
+
+export interface ExecutionSession {
+  confirmed_work_minutes?: number | null
+  confirmed_work_baseline_seconds?: number | null
+  accumulated_active_minutes?: number | null
+  execution_session_id: string
+  task_id: string
+  block_id?: string
+  task_title?: string
+  title?: string
+  status: ExecutionStatus
+  planned_start_at?: string
+  planned_end_at?: string
+  planned_work_minutes?: number
+  actual_minutes?: number
+  session_remaining_minutes?: number
+  task_remaining_minutes?: number
+  started_at?: string | number | null
+  actual_start_at?: string | number | null
+  paused_at?: string | number | null
+  resumed_at?: string | number | null
+  pause_reason?: string | null
+  interruption_action?: InterruptionAction | null
+  interruption_snapshot?: Record<string, unknown> | null
+  interruption_snapshot_json?: string | null
+  resume_preference?: string | null
+  preferred_resume_at?: string | null
+  remaining_at_pause?: number | null
+  resumed_from_session_id?: string | null
+  ended_at?: string | number | null
+  task?: {
+    title?: string
+    context?: string
+    contextWindow?: Record<string, unknown>
+    execution?: Record<string, unknown>
+  }
+  [key: string]: unknown
+}
+
+export interface InterruptionEpisode {
+  id: string
+  task_id: string
+  source_execution_session_id: string
+  context_dump_id?: string | null
+  interruption_action: InterruptionAction
+  pause_reason: string
+  paused_at: string
+  remaining_minutes: number
+  task_demand_snapshot: Record<string, unknown>
+  runtime_state_snapshot: Record<string, unknown>
+  profile_trait_refs: string[]
+  status: 'pending' | 'resumed' | 'settled'
+  reentry_guidance_generated_at?: string | null
+  resumed_execution_session_id?: string | null
+  resumed_at?: string | null
+  resume_latency_minutes?: number | null
+  outcome: { completion?: string | null; actual_minutes_after_resume?: number | null; reinterrupted?: boolean }
+}
+
+export interface InterruptionRecoverySummary {
+  episode_count: number
+  pending_count: number
+  resumed_count: number
+  settled_count: number
+  completion: { completed: number; partial: number; not_started: number; other: number }
+  reinterrupted_count: number
+  median_resume_latency_minutes?: number | null
+  causal_claim_allowed: false
+  profile_write_allowed: false
+}
+
+export interface RecommendationEffectSummary {
+  recommendation_count: number
+  accepted_count: number
+  alternative_count: number
+  unknown_count: number
+  applied_count: number
+  outcomes_by_choice: Record<ChoiceStatus, {
+    applied_count: number
+    settled_outcome_count: number
+    outcome_pending_count: number
+    median_resume_latency_minutes?: number | null
+    reinterrupted_count: number
+    completion: { completed: number; partial: number; not_started: number; other: number }
+  }>
+  rejected_count: number
+  linked_episode_count: number
+  settled_outcome_count: number
+  outcome_pending_count: number
+  reinterrupted_count: number
+  median_resume_latency_minutes?: number | null
+  completion: { completed: number; partial: number; not_started: number; other: number }
+  recent: Array<{
+    recommendation_id: string
+    task_id?: string | null
+    accepted: boolean
+    choice_status: ChoiceStatus
+    execution_applied: boolean
+    original_recommendation?: ChoiceSnapshot | null
+    selected_choice?: ChoiceSnapshot | null
+    recommended_action?: string | null
+    selected_action?: string | null
+    execution_session_id?: string | null
+    created_at?: string | number | null
+    interruption_episode_id?: string | null
+    recovery_status?: string | null
+    resume_latency_minutes?: number | null
+    reinterrupted?: boolean | null
+    completion?: string | null
+  }>
+  causal_claim_allowed: false
+  profile_write_allowed: false
+}
+
+export interface CurrentExecution {
+  mode: ExecutionMode
+  requires_resolution?: boolean
+  session?: ExecutionSession | null
+  task?: ExecutionSession['task'] | null
+  deferred_sessions?: ExecutionSession[]
+  overdue_sessions?: ExecutionSession[]
+  missed_sessions?: ExecutionSession[]
+  [key: string]: unknown
+}
+
+export interface ExecutionImpact {
+  confirmation_token?: string
+  action: string
+  execution_session_id: string
+  evaluated_at: string
+  remaining_minutes: number
+  estimated_end_at: string
+  requires_plan_adjustment: boolean
+  affected_sessions: Array<{
+    execution_session_id: string
+    task_id: string
+    task_title?: string
+    planned_start_at?: string
+    planned_end_at?: string
+    overlap_minutes: number
+  }>
+  options: string[]
+  capacity_projection?: {
+    plan_id?: string
+    plan_revision?: number
+    week_id?: string
+    fixed_event_interval_ids: string[]
+    buffer_minutes: number
+    protected_interval_ids: string[]
+  }
+}
+
+export interface ExecutionInterruption {
+  action: InterruptionAction
+  next_stage: 'break_timer' | 'capture_context_and_resume_time' | 'capture_context_and_ready_queue' | 'capture_reason_and_runtime_state' | string
+  context_required: boolean
+  runtime_state_required: boolean
+  formal_calendar_changed: boolean
+  policy: Record<string, unknown>
+}
+
+export interface LocalRescheduleCheck {
+  change_minutes: number
+  absorbed: Array<{ source: 'session_slack' | 'idle_gap' | 'buffer' | string; minutes: number }>
+  unabsorbed_minutes: number
+  absorbed_without_calendar_change: boolean
+  calendar_diff_required: boolean
+  formal_calendar_changed: boolean
+  releasable_execution_session_ids: string[]
+  confirmation_required: boolean
+}
+
+export interface ReadyQueueItem {
+  recovery_context?: { progress?: string; next_action?: string; open_questions?: string[]; [key: string]: unknown }
+  execution_session_id: string
+  task_id: string
+  task_title: string
+  planned_start_at?: string
+  planned_work_minutes?: number
+  remaining_minutes?: number
+  priority?: string
+  expected_difficulty?: number
+}
+
+export interface LocalCalendarDiff {
+  base_plan_id: string
+  base_plan_revision: number
+  week_id: string
+  scope: 'local'
+  trigger: string
+  status: 'proposed'
+  changes: Array<{ type: 'move_session'; before: Record<string, unknown>; after: Record<string, unknown> }>
+  affected_execution_session_ids: string[]
+  protected_resources: string[]
+  confirmation_required: true
+  formal_calendar_changed: false
+}
+
+export interface ExecutionFeedbackResult {
+  feedback?: Record<string, unknown>
+  task: Record<string, unknown>
+  execution_session?: ExecutionSession | null
+  requires_plan_adjustment: boolean
+  schedule_action: 'keep_time_free' | 'review_today'
+}
+
+export interface ExecutionResourceEnvelope<T> {
+  data: T
+  resources: {
+    self: string
+    tasks: string
+    current: string
+  }
+  meta: {
+    resource: 'execution_session' | 'execution_sessions' | 'execution_impact'
+    aggregate_root: 'task'
+    read_only: boolean
+  }
+}

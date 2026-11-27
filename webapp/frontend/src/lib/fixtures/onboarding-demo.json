@@ -1,0 +1,228 @@
+{
+  "draft": {
+    "state_input_version": 2,
+    "difficulty_input_version": 1,
+    "step": 0,
+    "role": "research_student",
+    "learningMode": "reading_writing",
+    "failureReasons": [
+      "task_ambiguity",
+      "fatigue",
+      "context_loss",
+      "underduration"
+    ],
+    "recentFailure": "原计划用45分钟完成一部分写作，但开始后发现还需要补资料。午后疲劳时转去处理邮件，回到写作又花了一段时间寻找之前的思路。",
+    "deepWorkWindow": "09:00-11:30",
+    "lowEnergyWindow": "14:00-15:30",
+    "sessionMinutes": 45,
+    "breakMinutes": 10,
+    "arrangement": {
+      "task_switching_preference": "finish_then_switch",
+      "task_distribution_preference": "spread"
+    },
+    "dayEnergy": {
+      "morning": 6,
+      "afternoon": 4,
+      "evening": 3
+    },
+    "availableWindows": "Monday 09:00-17:00\nTuesday 09:00-17:00\nWednesday 09:00-17:00\nThursday 09:00-17:00\nFriday 09:00-17:00\nSaturday 10:00-12:00",
+    "contextItems": [
+      {
+        "id": "demo-lunch-monday",
+        "type": "recurring_routine",
+        "title": "午餐与午间休息",
+        "day": "Monday",
+        "start": "12:00",
+        "end": "13:00",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      },
+      {
+        "id": "demo-lunch-tuesday",
+        "type": "recurring_routine",
+        "title": "午餐与午间休息",
+        "day": "Tuesday",
+        "start": "12:00",
+        "end": "13:00",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      },
+      {
+        "id": "demo-lunch-wednesday",
+        "type": "recurring_routine",
+        "title": "午餐与午间休息",
+        "day": "Wednesday",
+        "start": "12:00",
+        "end": "13:00",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      },
+      {
+        "id": "demo-lunch-thursday",
+        "type": "recurring_routine",
+        "title": "午餐与午间休息",
+        "day": "Thursday",
+        "start": "12:00",
+        "end": "13:00",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      },
+      {
+        "id": "demo-lunch-friday",
+        "type": "recurring_routine",
+        "title": "午餐与午间休息",
+        "day": "Friday",
+        "start": "12:00",
+        "end": "13:00",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      },
+      {
+        "id": "demo-supervisor-meeting",
+        "type": "fixed_event",
+        "title": "导师讨论会",
+        "day": "Tuesday",
+        "start": "10:00",
+        "end": "11:00",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      },
+      {
+        "id": "demo-project-meeting",
+        "type": "fixed_event",
+        "title": "项目组同步",
+        "day": "Thursday",
+        "start": "15:00",
+        "end": "15:30",
+        "duration_minutes": 0,
+        "occurrence_mode": "repeat_weekly"
+      }
+    ],
+    "keepBuffer": true,
+    "weeklyGoal": "在七天规划期内完成研究方法初稿、访谈材料整理和原型状态登记修改，准备一次导师汇报。每天保留缓冲，晚上与周日不安排研究工作。",
+    "tasks": [
+      {
+        "id": "demo-task-01",
+        "title": "阅读并比较两篇研究文献",
+        "due": "",
+        "duration": 90,
+        "priority": "high",
+        "expected_difficulty": 6,
+        "dependency": ""
+      },
+      {
+        "id": "demo-task-02",
+        "title": "撰写研究方法初稿",
+        "due": "",
+        "duration": 120,
+        "priority": "high",
+        "expected_difficulty": 8,
+        "dependency": "阅读并比较两篇研究文献"
+      },
+      {
+        "id": "demo-task-03",
+        "title": "整理并编码一份访谈记录",
+        "due": "",
+        "duration": 90,
+        "priority": "high",
+        "expected_difficulty": 6,
+        "dependency": ""
+      },
+      {
+        "id": "demo-task-04",
+        "title": "修改原型中的状态登记弹窗",
+        "due": "",
+        "duration": 60,
+        "priority": "high",
+        "expected_difficulty": 6,
+        "dependency": ""
+      },
+      {
+        "id": "demo-task-05",
+        "title": "测试首次设置与任务中断流程",
+        "due": "",
+        "duration": 60,
+        "priority": "medium",
+        "expected_difficulty": 5,
+        "dependency": "修改原型中的状态登记弹窗"
+      },
+      {
+        "id": "demo-task-06",
+        "title": "制作导师汇报PPT",
+        "due": "",
+        "duration": 90,
+        "priority": "medium",
+        "expected_difficulty": 5,
+        "dependency": "撰写研究方法初稿"
+      },
+      {
+        "id": "demo-task-07",
+        "title": "回复研究邮件",
+        "due": "",
+        "duration": 30,
+        "priority": "low",
+        "expected_difficulty": 2,
+        "dependency": ""
+      },
+      {
+        "id": "demo-task-08",
+        "title": "整理参考文献与项目文件夹",
+        "due": "",
+        "duration": 45,
+        "priority": "low",
+        "expected_difficulty": 2,
+        "dependency": ""
+      }
+    ],
+    "momentary": {
+      "mood": "neutral",
+      "energy": 5,
+      "focus": 5,
+      "stress": 3,
+      "daily_note": "这是一条测试状态：目前状态尚可，希望把重要的阅读或写作放在精力较好的时段，午后做一些整理工作，不占用晚上的个人时间。"
+    }
+  },
+  "deadlines": [
+    {
+      "draft_task_id": "demo-task-01",
+      "local_day_offset": 3,
+      "local_time": "12:00"
+    },
+    {
+      "draft_task_id": "demo-task-02",
+      "local_day_offset": 5,
+      "local_time": "17:00"
+    },
+    {
+      "draft_task_id": "demo-task-03",
+      "local_day_offset": 4,
+      "local_time": "17:00"
+    },
+    {
+      "draft_task_id": "demo-task-04",
+      "local_day_offset": 3,
+      "local_time": "17:00"
+    },
+    {
+      "draft_task_id": "demo-task-05",
+      "local_day_offset": 5,
+      "local_time": "12:00"
+    },
+    {
+      "draft_task_id": "demo-task-06",
+      "local_day_offset": 6,
+      "local_time": "12:00"
+    },
+    {
+      "draft_task_id": "demo-task-07",
+      "local_day_offset": 2,
+      "local_time": "17:00"
+    },
+    {
+      "draft_task_id": "demo-task-08",
+      "local_day_offset": 6,
+      "local_time": "17:00"
+    }
+  ],
+  "timezone": "Europe/Amsterdam"
+}

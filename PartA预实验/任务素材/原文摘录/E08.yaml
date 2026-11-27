@@ -1,0 +1,4 @@
+  - name: study_reading
+    time: afternoon
+    days: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+    human_activity_iri: https://w3id.org/calendar-bench/human-activities/activity/sitting-studying-general-including-reading-and-or-writing-light-effort

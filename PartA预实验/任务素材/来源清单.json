@@ -1,0 +1,142 @@
+{
+  "repository": "https://github.com/MaaniBeigy/calendar-bench",
+  "commit": "2c823c234d7c25bae7f603d74eb8fd7d522b7243",
+  "retrieved_on": "2026-11-25",
+  "license": "原始来源/LICENSE_CalendarBench.txt",
+  "files": [
+    {
+      "local_path": "原始来源/example_event_config.yaml",
+      "source_path": "src/experiments/persona/example_experiment/event_config.yaml",
+      "sha256": "f0e4ba7752459addaa6625259876dce5c5ed651fd5db22a8674b6b1d3c72352f"
+    },
+    {
+      "local_path": "原始来源/student_event_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/event_config.yaml",
+      "sha256": "6ab520426d52927e8a0468e66037c32b4b1d3483f2a5ac1c98752f4bad2124cf"
+    },
+    {
+      "local_path": "原始来源/student_persona_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml",
+      "sha256": "061f75ad6aafd44b191c2b9163c7ba2d79750b9416442b6dfeb94b13b58f701f"
+    },
+    {
+      "local_path": "原始来源/student_environment.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/environment.yaml",
+      "sha256": "f30431bd411df33376a582b2495d0e03962cfc46d6478afa5f913eb9fdaf42f0"
+    }
+  ],
+  "excerpts": [
+    {
+      "id": "E01",
+      "title": "通用示例：学习活动目录",
+      "source_file": "example_event_config.yaml",
+      "source_path": "src/experiments/persona/example_experiment/event_config.yaml",
+      "source_lines": [
+        77,
+        91
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/example_experiment/event_config.yaml#L77-L91",
+      "excerpt_path": "原文摘录/E01.yaml",
+      "interpretation": "包含 lecture、self-study 等标签；单次 1–8 小时是该示例的生成范围，不是教学建议。",
+      "sha256": "36813651b91556f7f75a1f652b58ca1a6789af6a688e041cb463a19263e3bd18"
+    },
+    {
+      "id": "E02",
+      "title": "学生实验：学习活动目录",
+      "source_file": "student_event_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/event_config.yaml",
+      "source_lines": [
+        103,
+        128
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/event_config.yaml#L103-L128",
+      "excerpt_path": "原文摘录/E02.yaml",
+      "interpretation": "包括 lecture、course、self-study、exam、quiz 等日历标签；单次通用范围 1–3 小时。标签不等于独立题本。",
+      "sha256": "24d4d0c0ec5df6e93c034d0c45eac416baca5f0394aa888031c12ed5709a1585"
+    },
+    {
+      "id": "E03",
+      "title": "学生实验：学习阅读目录",
+      "source_file": "student_event_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/event_config.yaml",
+      "source_lines": [
+        129,
+        143
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/event_config.yaml#L129-L143",
+      "excerpt_path": "原文摘录/E03.yaml",
+      "interpretation": "通用单次范围 5–60 分钟；定义可拆分性和可出现的时间段。",
+      "sha256": "d476f7b4a8fe393df2ce653f5680ec3d4e5d1819b8c08071d5fe3961f9a1e114"
+    },
+    {
+      "id": "E04",
+      "title": "学生模板：学习阶段",
+      "source_file": "student_persona_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml",
+      "source_lines": [
+        1240,
+        1243
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml#L1240-L1243",
+      "excerpt_path": "原文摘录/E04.yaml",
+      "interpretation": "模板将学习活动关联到工作日 10:00；这是合成人物设定，不是参与者实测偏好。",
+      "sha256": "7bd36aaf3d6a819ce9ccddc4613befb2467598de6df67c8f6d9b3da829aa2d2f"
+    },
+    {
+      "id": "E05",
+      "title": "学生模板：学习时长覆盖",
+      "source_file": "student_persona_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml",
+      "source_lines": [
+        1317,
+        1322
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml#L1317-L1322",
+      "excerpt_path": "原文摘录/E05.yaml",
+      "interpretation": "人物覆盖配置：单次 120–240 分钟，每日总量 240–420 分钟，2–3 段；不能只引用 E02 忽略覆盖。",
+      "sha256": "5f7b3f837e953c9c068dc3973cd521cb8e7a3b059d2d900c02ab0cc26f2b856a"
+    },
+    {
+      "id": "E06",
+      "title": "学生模板：阅读时长覆盖",
+      "source_file": "student_persona_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml",
+      "source_lines": [
+        1360,
+        1365
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml#L1360-L1365",
+      "excerpt_path": "原文摘录/E06.yaml",
+      "interpretation": "人物覆盖配置：单次 60–150 分钟，每日总量 120–240 分钟，1–2 段；这些合成参数未在我们的学生群体中验证。",
+      "sha256": "a8ffdce93bb8fc357f24bf53f016ef9fe34a27f99e8cff149b70839109911edf"
+    },
+    {
+      "id": "E07",
+      "title": "环境：时间段定义",
+      "source_file": "student_environment.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/environment.yaml",
+      "source_lines": [
+        17,
+        25
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/environment.yaml#L17-L25",
+      "excerpt_path": "原文摘录/E07.yaml",
+      "interpretation": "定义早晨、下午等时间段，以及场景任务的起止范围；不是特定学生的空闲时间。",
+      "sha256": "4d34d99f7df91eef147e301a1ec1612c125cea9888735e5920870ba244b05a30"
+    },
+    {
+      "id": "E08",
+      "title": "学生模板：阅读阶段",
+      "source_file": "student_persona_config.yaml",
+      "source_path": "src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml",
+      "source_lines": [
+        1300,
+        1303
+      ],
+      "url": "https://github.com/MaaniBeigy/calendar-bench/blob/2c823c234d7c25bae7f603d74eb8fd7d522b7243/src/experiments/persona/healthy_lifestyle_promotion/persona_config.yaml#L1300-L1303",
+      "excerpt_path": "原文摘录/E08.yaml",
+      "interpretation": "学习阅读出现于人物阶段设置；与 E03/E06 是同类活动的不同配置层，不是新样本。",
+      "sha256": "f5128092e23db7b0c090c8147a047f7081073a7d8f6337ced1400c4eeed2e94a"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+"""Pure Task creation policy."""
+
+from __future__ import annotations
+
+from typing import Any
+
+from .aggregate import TaskAggregate, TaskExecutionState
+
+
+def prepare_task_creation(
+    *,
+    task_id: str,
+    user_id: str,
+    title: str,
+    domain_type: str,
+    schedule_type: str,
+    duration_minutes: int,
+    priority: str,
+    status: str,
+    context: str,
+    context_window: dict[str, Any],
+    task_demand: dict[str, Any],
+    cognitive_load: str,
+    ambiguity: str,
+    switch_cost: str,
+    reentry_cost: str,
+    execution: dict[str, Any] | None,
+    resource_modality: list[str] | None,
+    attention_mode: str | None,
+    parallelizable: bool,
+    expected_difficulty: str | None,
+    week_id: str,
+    timezone_name: str | None,
+    start_at: str | None,
+    deadline_at: str | None,
+) -> TaskAggregate:
+    priority_aliases = {
+        "high": "高",
+        "medium": "中",
+        "low": "低",
+        "高": "高",
+        "中": "中",
+        "低": "低",
+    }
+    normalized_priority = priority_aliases.get(str(priority).strip().lower(), "中")
+    normalized_schedule_type = schedule_type
+    normalized_start_at = (
+        start_at
+        or context_window.get("startAt")
+    )
+    normalized_window = {
+        **context_window,
+        "taskType": normalized_schedule_type,
+        "timezone": timezone_name or context_window.get("timezone"),
+        "startAt": normalized_start_at,
+    }
+    execution_state = execution or {
+        "original_estimate_minutes": duration_minutes,
+        "accumulated_actual_minutes": 0,
+        "remaining_duration_minutes": duration_minutes,
+        "progress_percent": 0,
+        "sessions": [],
+        "history_sessions": [],
+    }
+    execution_state.setdefault("history_sessions", [])
+    from .resource_profile import normalize_attention_mode, normalize_resource_tags
+
+    return TaskAggregate(
+        task_id=task_id,
+        user_id=user_id,
+        title=title,
+        domain_type=domain_type,
+        schedule_type=normalized_schedule_type,
+        deadline_at=deadline_at,
+        duration_minutes=duration_minutes,
+        priority=normalized_priority,
+        status=status,
+        context=context,
+        context_window=normalized_window,
+        task_demand=task_demand,
+        execution=TaskExecutionState.model_validate(execution_state),
+        cognitive_load=cognitive_load,
+        ambiguity=ambiguity,
+        switch_cost=switch_cost,
+        reentry_cost=reentry_cost,
+        resource_modality=normalize_resource_tags(resource_modality),
+        attention_mode=normalize_attention_mode(attention_mode),
+        parallelizable=parallelizable,
+        expected_difficulty=expected_difficulty,
+        week_id=week_id,
+    )

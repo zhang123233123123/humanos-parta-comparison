@@ -1,0 +1,35 @@
+import { humanosErrorResponse, humanosRequest } from '@/lib/server/humanos-api'
+import { getHumanOSUserId, unauthorizedResponse } from '@/lib/server/humanos-user'
+
+export async function POST(req: Request) {
+  try {
+    const userId = await getHumanOSUserId()
+    if (!userId) return unauthorizedResponse()
+
+    const body = await req.json()
+    const { message, thread_id, assistant_mode, locale, request_id } = body
+
+    if (!message) {
+      return Response.json({ error: 'message is required' }, { status: 400 })
+    }
+
+    if (assistant_mode === 'draft_supplement' && (!body.draft_id || !Number.isInteger(body.draft_version))) {
+      return Response.json({ error: 'Draft ID and version are required' }, { status: 400 })
+    }
+    const data: any = await humanosRequest('POST', '/api/background-jobs', {
+      user_id: userId, kind: 'chat_parse', payload: {
+        text: message, thread_id: thread_id || undefined,
+        draft_workflow: assistant_mode !== 'calendar_advisor',
+        draft_id: body.draft_id, draft_version: body.draft_version,
+        supplement_context: assistant_mode === 'draft_supplement' && Array.isArray(body.supplement_context)
+          ? body.supplement_context.slice(-2).map((turn: any) => ({ user_text: String(turn.user_text || '').slice(0, 4000), assistant_reply: String(turn.assistant_reply || '').slice(0, 4000) })) : undefined,
+        request_id: request_id || undefined,
+        assistant_mode: assistant_mode || 'task_planner', locale: locale || 'zh',
+        current_time: new Date().toISOString(),
+      },
+    })
+    return Response.json(data, { status: 202 })
+  } catch (error) {
+    return humanosErrorResponse(error)
+  }
+}

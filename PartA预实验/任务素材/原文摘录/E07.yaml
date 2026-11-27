@@ -1,0 +1,9 @@
+time_windows: # named [start, end] ranges, in minutes from midnight
+  early_morning: [240, 390] # 04:00 - 06:30
+  morning: [390, 720] # 06:30 - 12:00
+  afternoon: [720, 1050] # 12:00 - 17:30
+  evening: [1050, 1290] # 17:30 - 21:30
+  night: [1290, 1440] # 21:30 - 24:00
+daily_window: # waking time bracket for scenario-task placement
+  wake_minutes: 360 # 06:00
+  sleep_minutes: 1320 # 22:00

@@ -1,0 +1,15 @@
+  education:
+    events:
+      study:
+        human_activity_iri: https://w3id.org/calendar-bench/human-activities/activity/sitting-studying-general-including-reading-and-or-writing-light-effort
+        requires:
+          occupation_status: { in: [student] }
+        weekdays: [Mon, Tue, Wed, Thu, Fri]
+        intensity: 2
+        is_concurrent: true
+        is_dividable: true
+        per_event_duration: { min: 1, max: 8, unit: hours }
+        total_event_duration: { scale: day, min: 0, max: 8, unit: hours }
+        total_event_episodes: { scale: day, min: 0, max: 3 }
+        calendar_variations:
+          task_labels: [lecture, self-study, work lecture, instructions]

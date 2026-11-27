@@ -1,0 +1,1711 @@
+[
+  {
+    "participant": "A01",
+    "interview_label": "A1",
+    "legacy_numeric_label": "P01",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T17:06:41.250446+08:00",
+    "original_profile_fields": {
+      "session_minutes": 25,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "reading_writing",
+        "failure_reasons": [
+          "task_ambiguity",
+          "fatigue",
+          "interruption",
+          "underduration",
+          "priority_change"
+        ],
+        "recent_failure": "给自己安排了读文献的任务，但是刚开始读有很多不懂，花费的时间很长，还有就是给师兄写专利，读文献的任务就搁置了",
+        "day_energy": {
+          "morning": 7,
+          "afternoon": 3,
+          "evening": 4
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": null
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 7,
+          "afternoon": 3,
+          "evening": 4
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 25,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T08:00:00+08:00",
+          "end_at": "2026-10-16T22:00:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "Meeting",
+          "start_at": "2026-10-16T10:00:00+08:00",
+          "end_at": "2026-10-16T11:15:00+08:00"
+        },
+        {
+          "title": "Meeting",
+          "start_at": "2026-10-16T17:15:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        },
+        {
+          "title": "Class",
+          "start_at": "2026-10-16T14:00:00+08:00",
+          "end_at": "2026-10-16T16:00:00+08:00"
+        },
+        {
+          "title": "Class",
+          "start_at": "2026-10-16T19:00:00+08:00",
+          "end_at": "2026-10-16T21:30:00+08:00"
+        },
+        {
+          "title": "exercise",
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T10:00:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "break_minutes",
+      "personal_profile.task_distribution_preference"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A02",
+    "interview_label": "A2",
+    "legacy_numeric_label": "P02",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T19:15:29.432827+08:00",
+    "original_profile_fields": {
+      "session_minutes": 60,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "visual",
+        "failure_reasons": [
+          "fatigue",
+          "interruption",
+          "context_loss",
+          "priority_change",
+          "underduration"
+        ],
+        "recent_failure": "计划在机场做xxx事情，但是因为太疲惫选择休息",
+        "day_energy": {
+          "morning": 5,
+          "afternoon": 6,
+          "evening": 3
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 5,
+          "afternoon": 6,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 60,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "break_minutes",
+      "personal_profile.day_energy.morning",
+      "personal_profile.day_energy.evening"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A03",
+    "interview_label": "A3",
+    "legacy_numeric_label": "P03",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T18:59:07.576590+08:00",
+    "original_profile_fields": {
+      "session_minutes": 90,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "visual",
+        "failure_reasons": [
+          "task_ambiguity",
+          "fatigue"
+        ],
+        "recent_failure": "",
+        "day_energy": {
+          "morning": 4,
+          "afternoon": 5,
+          "evening": 6
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "spread"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 4,
+          "afternoon": 5,
+          "evening": 6
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 90,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "break_minutes"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A04",
+    "interview_label": "A4",
+    "legacy_numeric_label": "P04",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T18:48:23.907333+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "reading_writing",
+        "failure_reasons": [
+          "task_ambiguity"
+        ],
+        "recent_failure": "暂无",
+        "day_energy": {
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "task_switching_preference": "interleave",
+        "task_distribution_preference": null
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "interleave",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "Meeting",
+          "start_at": "2026-10-16T12:50:00+08:00",
+          "end_at": "2026-10-16T13:50:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.morning",
+      "personal_profile.day_energy.afternoon",
+      "personal_profile.day_energy.evening",
+      "personal_profile.task_distribution_preference"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A05",
+    "interview_label": "A5",
+    "legacy_numeric_label": "P05",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T14:27:21.421897+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": false,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "underduration"
+        ],
+        "recent_failure": "",
+        "day_energy": {
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "keep_buffer",
+      "personal_profile.day_energy.morning",
+      "personal_profile.day_energy.afternoon",
+      "personal_profile.day_energy.evening"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A06",
+    "interview_label": "A6",
+    "legacy_numeric_label": "P06",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T19:37:17.959911+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 15,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "fatigue",
+          "task_ambiguity"
+        ],
+        "recent_failure": "计划好要做实验，但是遇到了一些困难无从下手拖了很久",
+        "day_energy": {
+          "morning": 2,
+          "afternoon": 7,
+          "evening": 3
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": null
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 2,
+          "afternoon": 7,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 15,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "personal_profile.day_energy.evening",
+      "personal_profile.task_distribution_preference"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A07",
+    "interview_label": "A7",
+    "legacy_numeric_label": "P07",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T17:54:56.537717+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "reading_writing",
+        "failure_reasons": [
+          "interruption"
+        ],
+        "recent_failure": "有计划但是被突如其来的变动打破",
+        "day_energy": {
+          "morning": 6,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 6,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.afternoon",
+      "personal_profile.day_energy.evening"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A08",
+    "interview_label": "A8",
+    "legacy_numeric_label": "P08",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T15:41:48.367664+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 15,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "thesis_stage",
+        "learning_mode": "visual",
+        "failure_reasons": [
+          "task_ambiguity",
+          "interruption",
+          "priority_change"
+        ],
+        "recent_failure": "因为其他非科研事宜导致原本的任务安排被打乱",
+        "day_energy": {
+          "morning": 2,
+          "afternoon": 4,
+          "evening": 7
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "spread"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 2,
+          "afternoon": 4,
+          "evening": 7
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 15,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "Class",
+          "start_at": "2026-10-16T16:10:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "personal_profile.day_energy.afternoon"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "A09",
+    "interview_label": "A9",
+    "legacy_numeric_label": "P09",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "baseline",
+    "submitted_at": "2026-10-16T14:32:26.344331+08:00",
+    "original_profile_fields": {
+      "session_minutes": 60,
+      "break_minutes": 15,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "task_ambiguity",
+          "interruption",
+          "priority_change"
+        ],
+        "recent_failure": "计划精读几篇文章，但还未实施",
+        "day_energy": {
+          "morning": 6,
+          "afternoon": 2,
+          "evening": 6
+        },
+        "task_switching_preference": "interleave",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 6,
+          "afternoon": 2,
+          "evening": 6
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 60,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 15,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "interleave",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B16",
+    "interview_label": "B1",
+    "legacy_numeric_label": "P16",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T10:42:46.436963+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "reading_writing",
+        "failure_reasons": [
+          "task_ambiguity",
+          "fatigue",
+          "context_loss",
+          "interruption",
+          "underduration"
+        ],
+        "recent_failure": "实验项目进度测试 由于会议室被占用然后就不想做了\n\n",
+        "day_energy": {
+          "morning": 4,
+          "afternoon": 4,
+          "evening": 4
+        },
+        "task_switching_preference": null,
+        "task_distribution_preference": null
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 4,
+          "afternoon": 4,
+          "evening": 4
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": null,
+        "coverage": "原记录为空",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.afternoon",
+      "personal_profile.task_switching_preference",
+      "personal_profile.task_distribution_preference"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B17",
+    "interview_label": "B2",
+    "legacy_numeric_label": "P17",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T10:43:52.508399+08:00",
+    "original_profile_fields": {
+      "session_minutes": 60,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "task_ambiguity",
+          "interruption",
+          "fatigue"
+        ],
+        "recent_failure": "需要做汇报ppt，但是一直看论文看不进去",
+        "day_energy": {
+          "morning": 6,
+          "afternoon": 6,
+          "evening": 3
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "spread"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 6,
+          "afternoon": 6,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 60,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "break_minutes",
+      "personal_profile.day_energy.evening"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B18",
+    "interview_label": "B3",
+    "legacy_numeric_label": "P18",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T10:38:29.562182+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "thesis_stage",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "interruption",
+          "priority_change",
+          "underduration"
+        ],
+        "recent_failure": "研究设备损坏了，买新的货源稀缺，现在还没发货，研究进度因此搁置",
+        "day_energy": {
+          "morning": 7,
+          "afternoon": 4,
+          "evening": 1
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 7,
+          "afternoon": 4,
+          "evening": 1
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T08:30:00+08:00",
+          "end_at": "2026-10-16T17:15:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "班会",
+          "start_at": "2026-10-16T17:15:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.afternoon"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B19",
+    "interview_label": "B4",
+    "legacy_numeric_label": "P19",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T15:11:30.472413+08:00",
+    "original_profile_fields": {
+      "session_minutes": 90,
+      "break_minutes": 20,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "practice",
+        "failure_reasons": [
+          "task_ambiguity",
+          "context_loss",
+          "priority_change",
+          "underduration",
+          "interruption",
+          "fatigue"
+        ],
+        "recent_failure": "写在日历里面但是不知道从哪里开始\n",
+        "day_energy": {
+          "morning": 6,
+          "afternoon": 4,
+          "evening": 2
+        },
+        "task_switching_preference": "interleave",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 6,
+          "afternoon": 4,
+          "evening": 2
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 90,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 20,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "interleave",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "personal_profile.day_energy.afternoon"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B20",
+    "interview_label": "B5",
+    "legacy_numeric_label": "P20",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T11:05:26.883582+08:00",
+    "original_profile_fields": {
+      "session_minutes": 60,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "interruption",
+          "priority_change",
+          "underduration"
+        ],
+        "recent_failure": "已经规划好要做什么，但是临时开会把计划打乱了",
+        "day_energy": {
+          "morning": 2,
+          "afternoon": 5,
+          "evening": 4
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 2,
+          "afternoon": 5,
+          "evening": 4
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 60,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "午饭午休",
+          "start_at": "2026-10-16T11:45:00+08:00",
+          "end_at": "2026-10-16T14:00:00+08:00"
+        },
+        {
+          "title": "晚饭",
+          "start_at": "2026-10-16T17:30:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        },
+        {
+          "title": "组会",
+          "start_at": "2026-10-16T09:30:00+08:00",
+          "end_at": "2026-10-16T11:30:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "break_minutes"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B21",
+    "interview_label": "B6",
+    "legacy_numeric_label": "P21",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T10:34:25.754086+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "practice",
+        "failure_reasons": [
+          "task_ambiguity"
+        ],
+        "recent_failure": "有 我想学习agent相关但一直被打断",
+        "day_energy": {
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": null
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.morning",
+      "personal_profile.day_energy.afternoon",
+      "personal_profile.day_energy.evening",
+      "personal_profile.task_distribution_preference"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B22",
+    "interview_label": "B7",
+    "legacy_numeric_label": "P22",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T14:58:43.471128+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 15,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "priority_change",
+          "task_ambiguity"
+        ],
+        "recent_failure": "准备论文转投但因为琐事，推迟",
+        "day_energy": {
+          "morning": 2,
+          "afternoon": 6,
+          "evening": 7
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 2,
+          "afternoon": 6,
+          "evening": 7
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 15,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:30:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "论文润色完善",
+          "start_at": "2026-10-16T14:30:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B23",
+    "interview_label": "B8",
+    "legacy_numeric_label": "P23",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T10:39:54.514378+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "mixed",
+        "failure_reasons": [
+          "task_ambiguity",
+          "interruption",
+          "context_loss",
+          "underduration"
+        ],
+        "recent_failure": "",
+        "day_energy": {
+          "morning": 4,
+          "afternoon": 5,
+          "evening": 3
+        },
+        "task_switching_preference": null,
+        "task_distribution_preference": null
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 4,
+          "afternoon": 5,
+          "evening": 3
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": null,
+        "coverage": "原记录为空",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T18:00:00+08:00"
+        }
+      ],
+      "fixed_events": [],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.evening",
+      "personal_profile.task_switching_preference",
+      "personal_profile.task_distribution_preference"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  },
+  {
+    "participant": "B24",
+    "interview_label": "B9",
+    "legacy_numeric_label": "P24",
+    "material_type": "historical_observed_profile",
+    "selection_rule": "第一阶段首次 setup_submitted 前最近一次 profile_updated.after",
+    "source_phase": 1,
+    "source_system": "humanos",
+    "submitted_at": "2026-10-16T10:38:46.486085+08:00",
+    "original_profile_fields": {
+      "session_minutes": 45,
+      "break_minutes": 10,
+      "preferences": "",
+      "keep_buffer": true,
+      "personal_profile": {
+        "role": "research_student",
+        "learning_mode": "practice",
+        "failure_reasons": [
+          "interruption",
+          "priority_change",
+          "underduration",
+          "task_ambiguity"
+        ],
+        "recent_failure": "",
+        "day_energy": {
+          "morning": 5,
+          "afternoon": 7,
+          "evening": 5
+        },
+        "task_switching_preference": "finish_then_switch",
+        "task_distribution_preference": "concentrated"
+      }
+    },
+    "part_a_dimension_mapping": {
+      "typical_time_of_day": {
+        "source_field": "personal_profile.day_energy",
+        "value": {
+          "morning": 5,
+          "afternoon": 7,
+          "evening": 5
+        },
+        "coverage": "部分覆盖",
+        "gap": "自报典型精力不是直接的时段偏好；适用条件与例外未系统采集。"
+      },
+      "task_order": {
+        "source_field": null,
+        "value": null,
+        "coverage": "未结构化采集",
+        "gap": "不能把跨天分配或任务切换解释为先难后易／先易后难；自由文字保留原文，不自动补出顺序偏好。"
+      },
+      "work_block": {
+        "source_field": "session_minutes",
+        "value": 45,
+        "coverage": "部分覆盖",
+        "gap": "有时长参数，但未系统区分固定时长、自然停点及适用例外。"
+      },
+      "breaks": {
+        "source_field": "break_minutes",
+        "value": 10,
+        "coverage": "部分覆盖",
+        "gap": "有休息分钟数；休息形式、触发规则与例外未系统采集。"
+      },
+      "concentrated_or_interleaved": {
+        "source_field": "personal_profile.task_switching_preference",
+        "value": "finish_then_switch",
+        "coverage": "部分覆盖",
+        "gap": "旧题提供任务切换偏好，尚未按新版的相邻工作块含义和适用条件确认。"
+      }
+    },
+    "first_day_context": {
+      "date": "2026-10-16",
+      "timezone": "Asia/Shanghai",
+      "availability": [
+        {
+          "start_at": "2026-10-16T09:00:00+08:00",
+          "end_at": "2026-10-16T22:00:00+08:00"
+        }
+      ],
+      "fixed_events": [
+        {
+          "title": "图研究理论文献",
+          "start_at": "2026-10-16T14:00:00+08:00",
+          "end_at": "2026-10-16T16:00:00+08:00"
+        }
+      ],
+      "availability_source": "availability",
+      "source": "第一阶段首次提交 Profile 的 setup_start 对应日；固定事项按当地日期裁剪。"
+    },
+    "per_task_difficulty_for_new_scenarios": null,
+    "current_state_for_new_scenarios": null,
+    "confirmed_for_new_study": false,
+    "fields_equal_to_factory_default": [
+      "session_minutes",
+      "break_minutes",
+      "personal_profile.day_energy.morning"
+    ],
+    "use_note": "供离线预试输入；不是新研究受试者数据，不补造缺失维度；first_day_context 为四条件共同时间上下文，未混入旧任务、当天状态或评分。"
+  }
+]

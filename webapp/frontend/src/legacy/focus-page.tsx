@@ -1,0 +1,484 @@
+'use client'
+
+import { RecoveryNoteInput, RecoveryDetailsInput } from '@/components/recovery-note-input'
+import { LoadingSkeleton, ProcessingNotice } from '@/components/page-feedback'
+
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import Link from 'next/link'
+import { ArrowLeft, CheckCircle2, Clock3, Loader2, Pause, Play, Square, TimerReset } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { apiRequest } from '@/lib/client/api'
+import { accountNow, loadAccountClock, CLOCK_CHANGE_KEY, type ClockAnchor } from '@/lib/client/account-clock'
+import { requestId } from '@/lib/client/request-id'
+import { ExecutionAdjustment } from '@/components/execution-adjustment'
+import { executionClock, executionFeedbackDefaults, confirmedWorkRemainingSeconds } from '@/lib/presentation/execution-clock'
+import type { CurrentExecution, ExecutionFeedbackResult, ExecutionImpact, ExecutionInterruption, ExecutionResourceEnvelope, ExecutionSession, InterruptionAction, LocalCalendarDiff, ReadyQueueItem } from '@/lib/contracts/execution-contracts'
+import { useTranslation } from '@/i18n/LanguageProvider'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { checkExecutionImpact } from '@/lib/client/execution-impact'
+import { ExecutionImpactConfirmation } from '@/components/execution-impact-confirmation'
+
+function timestamp(value: unknown): number | null {
+  if (!value) return null
+  if (typeof value === 'number') return value > 9999999999 ? value : value * 1000
+  const parsed = Date.parse(String(value))
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function durationLabel(totalSeconds: number) {
+  const safe = Math.max(Math.floor(totalSeconds), 0)
+  const hours = Math.floor(safe / 3600)
+  const minutes = Math.floor((safe % 3600) / 60)
+  const seconds = safe % 60
+  return [hours, minutes, seconds].map((part) => String(part).padStart(2, '0')).join(':')
+}
+
+export default function FocusPage() {
+  const { t, locale } = useTranslation()
+  const router = useRouter()
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const [refreshing, setRefreshing] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [replanning, setReplanning] = useState(false)
+  const [current, setCurrent] = useState<CurrentExecution | null>(null)
+  const [history, setHistory] = useState<ExecutionSession[]>([])
+  const [endedSession, setEndedSession] = useState<ExecutionSession | null>(null)
+  const [resumeImpact, setResumeImpact] = useState<ExecutionImpact | null>(null)
+  const [switchImpact, setSwitchImpact] = useState<{ candidate: ReadyQueueItem; impact: ExecutionImpact } | null>(null)
+  const [pausePrompt, setPausePrompt] = useState(false)
+  const [pauseAction, setPauseAction] = useState<InterruptionAction | null>(null)
+  const [readyQueue, setReadyQueue] = useState<ReadyQueueItem[]>([])
+  const [pauseReason, setPauseReason] = useState('')
+  const [pauseProgress, setPauseProgress] = useState('')
+  const [pauseTaskRemaining, setPauseTaskRemaining] = useState('')
+  const [pauseNextStep, setPauseNextStep] = useState('')
+  const [pauseQuestions, setPauseQuestions] = useState('')
+  const [resumePreference, setResumePreference] = useState<'soon' | 'later_today' | 'unknown'>('soon')
+  const [preferredResumeAt, setPreferredResumeAt] = useState('')
+  const [now, setNow] = useState(Date.now())
+  const [actualMinutes, setActualMinutes] = useState(0)
+  const [completion, setCompletion] = useState<'completed' | 'some_progress' | 'no_progress' | 'did_not_start'>('some_progress')
+  const [remainingMinutes, setRemainingMinutes] = useState<number | undefined>(undefined)
+  const [remainingEdited, setRemainingEdited] = useState(false)
+  const feedbackSessionId = useRef<string | null>(null)
+  const [progress, setProgress] = useState('')
+  const [feedbackNextStep, setFeedbackNextStep] = useState('')
+  const [remainingWork, setRemainingWork] = useState('')
+  const [scheduleAction, setScheduleAction] = useState<'keep_time_free' | 'review_today'>('keep_time_free')
+  const [difficulty, setDifficulty] = useState(4)
+  const [focusAfter, setFocusAfter] = useState(4)
+  const [energyAfter, setEnergyAfter] = useState(4)
+  const [stressAfter, setStressAfter] = useState(4)
+  const [timingFit, setTimingFit] = useState('good')
+  const [sessionLengthFit, setSessionLengthFit] = useState('appropriate')
+  const refreshInFlight = useRef(false)
+  const lastRefreshStartedAt = useRef(0)
+  const accountClock = useRef<ClockAnchor | null>(null)
+  const readClockNow = useCallback(() => accountNow(accountClock.current, performance.now(), Date.now()), [])
+
+  const loadExecution = useCallback(async (initial = false) => {
+    if (refreshInFlight.current) return
+    refreshInFlight.current = true
+    lastRefreshStartedAt.current = Date.now()
+    if (initial) setLoading(true)
+    else setRefreshing(true)
+    try {
+      const [currentData, historyData, nextClock] = await Promise.all([
+        apiRequest<ExecutionResourceEnvelope<{ current: CurrentExecution }>>('/api/execution-sessions/current'),
+        apiRequest<ExecutionResourceEnvelope<{ execution_sessions: ExecutionSession[] }>>('/api/execution-sessions'),
+        loadAccountClock(apiRequest, () => performance.now()),
+      ])
+      // Clock and execution state refresh together; failed clock reads are not
+      // replaced with a real-time guess for test accounts.
+      accountClock.current = nextClock
+      setNow(readClockNow())
+      setCurrent(currentData.data.current)
+      setHistory(historyData.data.execution_sessions || [])
+      setLoadError(null)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t('execution.loadFailed')
+      setLoadError(message)
+      toast(message)
+    } finally {
+      if (initial) setLoading(false)
+      else setRefreshing(false)
+      refreshInFlight.current = false
+    }
+  }, [t, readClockNow])
+
+  useEffect(() => {
+    void loadExecution(true)
+  }, [loadExecution])
+
+  useEffect(() => {
+    if (!current) return
+    if (current.mode !== 'session_ended' || !current.session) {
+      feedbackSessionId.current = null
+      setEndedSession(null)
+      return
+    }
+    const ended = current.session
+    if (feedbackSessionId.current === ended.execution_session_id) return
+    feedbackSessionId.current = ended.execution_session_id
+    const defaults = executionFeedbackDefaults(ended, current.task || ended.task)
+    setEndedSession(ended)
+    setActualMinutes(defaults.actualMinutes)
+    setRemainingMinutes(defaults.remainingMinutes)
+    setRemainingEdited(false)
+    setCompletion('some_progress')
+    setProgress('')
+    setFeedbackNextStep('')
+    setRemainingWork('')
+    setScheduleAction('keep_time_free')
+  }, [current])
+
+  useEffect(() => {
+    const refreshExecution = () => {
+      // Browsers commonly emit focus and visibilitychange together. Treat them
+      // as one synchronization so returning to the tab does not double-fetch.
+      if (Date.now() - lastRefreshStartedAt.current < 1000) return
+      void loadExecution()
+    }
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === 'visible') {
+        setNow(readClockNow())
+        refreshExecution()
+      }
+    }
+
+    const clockChanged = () => { void loadExecution() }
+    const storageChanged = (event: StorageEvent) => { if (event.key === CLOCK_CHANGE_KEY) clockChanged() }
+    window.addEventListener(CLOCK_CHANGE_KEY, clockChanged)
+    window.addEventListener('storage', storageChanged)
+    // Also catches clock changes made through API or another browser.
+    const clockPoll = window.setInterval(() => {
+      if (accountClock.current && document.visibilityState === 'visible') void loadExecution()
+    }, 5000)
+    window.addEventListener('humanos:plan-updated', refreshExecution)
+    window.addEventListener('humanos:plan-revision', refreshExecution)
+    window.addEventListener('focus', refreshExecution)
+    document.addEventListener('visibilitychange', refreshWhenVisible)
+    return () => {
+      window.clearInterval(clockPoll)
+      window.removeEventListener(CLOCK_CHANGE_KEY, clockChanged)
+      window.removeEventListener('storage', storageChanged)
+      window.removeEventListener('humanos:plan-updated', refreshExecution)
+      window.removeEventListener('humanos:plan-revision', refreshExecution)
+      window.removeEventListener('focus', refreshExecution)
+      document.removeEventListener('visibilitychange', refreshWhenVisible)
+    }
+  }, [loadExecution, readClockNow])
+
+  const breakSession = current?.session?.interruption_action === 'short_break'
+    ? current.session
+    : current?.deferred_sessions?.find((item) => item.interruption_action === 'short_break') || null
+  const breakEndsAt = timestamp(breakSession?.preferred_resume_at)
+  const breakRemainingSeconds = breakEndsAt ? Math.max(Math.ceil((breakEndsAt - now) / 1000), 0) : 0
+  const breakFinished = Boolean(breakSession && breakRemainingSeconds === 0)
+
+  useEffect(() => {
+    if (!['running', 'overdue_running'].includes(String(current?.mode)) && !breakSession) return
+    const timer = window.setInterval(() => setNow(readClockNow()), 1000)
+    return () => window.clearInterval(timer)
+  }, [breakSession, current?.mode, readClockNow])
+
+  const session = current?.session || null
+  const overdueSessions = current?.overdue_sessions || []
+  const task = current?.task || session?.task || null
+  const feedbackRemaining = remainingEdited ? remainingMinutes : endedSession
+    ? executionFeedbackDefaults({ ...endedSession, accumulated_active_minutes: completion === 'did_not_start' ? 0 : actualMinutes }, task || undefined).remainingMinutes
+    : undefined
+  const title = session?.task_title || session?.title || task?.title || t('execution.untitledTask')
+  const { elapsedSeconds, remainingMinutes: displayRemaining } = executionClock(session, now)
+  const isActivelyRunning = current?.mode === 'running' || current?.mode === 'overdue_running'
+
+  const [adjustmentSessionId, setAdjustmentSessionId] = useState<string | null>(null)
+  const confirmedRemaining = confirmedWorkRemainingSeconds(session, now)
+
+  const plannedMinutes = Number(session?.planned_work_minutes || 0)
+
+  const contextWindow = (task?.contextWindow || {}) as Record<string, unknown>
+  const nextStep = String(contextWindow.nextStep || '')
+
+  const startSession = async (skipImpactCheck = false) => {
+    if (!session) return
+    if (current?.requires_resolution && current.mode !== 'overdue_running') {
+      toast(locale === 'zh' ? '请先处理上方的超时执行记录，再开始下一项。' : 'Resolve the overdue execution record above before starting the next session.')
+      return
+    }
+    setSubmitting(true)
+    try {
+      {
+        const analysis = await apiRequest<ExecutionResourceEnvelope<{ impact: ExecutionImpact }>>('/api/execution-sessions/impact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ execution_session_id: session.execution_session_id, action: 'resume' }),
+        })
+        if (analysis.data.impact.requires_plan_adjustment && (!skipImpactCheck || analysis.data.impact.confirmation_token !== resumeImpact?.confirmation_token)) {
+          setResumeImpact(analysis.data.impact)
+          return
+        }
+      }
+      const result = await apiRequest<ExecutionResourceEnvelope<{ execution_session: ExecutionSession }>>('/api/execution-sessions/start', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ execution_session_id: session.execution_session_id, request_id: requestId('start'), confirm_schedule_impact: skipImpactCheck, impact_confirmation_token: skipImpactCheck ? resumeImpact?.confirmation_token : undefined }),
+      })
+      setCurrent({ mode: 'running', session: result.data.execution_session, task })
+      setReadyQueue([])
+      setResumeImpact(null)
+      setNow(readClockNow())
+      window.dispatchEvent(new CustomEvent('humanos:execution-updated', { detail: { action: current?.mode === 'paused' ? 'resume' : 'start', executionSession: result.data.execution_session } }))
+      toast(t('execution.started'))
+    } catch (error) {
+      toast(error instanceof Error ? error.message : t('execution.startFailed'))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const pauseSession = async (action: 'continue_later' | 'switch_task') => {
+    if (!session) return
+    if (pauseTaskRemaining !== '' && (!Number.isSafeInteger(Number(pauseTaskRemaining)) || Number(pauseTaskRemaining) < 0)) {
+      toast(locale === 'zh' ? '任务剩余分钟请输入非负整数' : 'Enter a non-negative integer for remaining task minutes')
+      return
+    }
+    setSubmitting(true)
+    try {
+      const minutes = Math.max(Math.floor(elapsedSeconds / 60), 0)
+      const preferred = resumePreference === 'soon'
+        ? new Date(readClockNow() + 10 * 60_000).toISOString()
+        : resumePreference === 'later_today' && preferredResumeAt ? new Date(preferredResumeAt).toISOString() : null
+      const result = await apiRequest<ExecutionResourceEnvelope<{ execution_session: ExecutionSession; context_dump: Record<string, unknown> | null; interruption: ExecutionInterruption; pause_review: ExecutionImpact; ready_queue: ReadyQueueItem[]; calendar_diff: LocalCalendarDiff | null; proposed_plan: Record<string, unknown> | null; planning_warning: string | null }>>('/api/execution-sessions/interrupt', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ execution_session_id: session.execution_session_id, interruption_action: action, actual_minutes: minutes, remaining_minutes: displayRemaining, task_remaining_minutes: pauseTaskRemaining === '' ? undefined : Number(pauseTaskRemaining), pause_reason: pauseReason, progress: pauseProgress, next_step: pauseNextStep, open_questions: pauseQuestions, resume_preference: resumePreference, preferred_resume_at: preferred, request_id: requestId(`pause-${action}`) }),
+      })
+      setCurrent({ mode: 'paused', session: result.data.execution_session, task })
+      setPausePrompt(false)
+      setPauseAction(null)
+      setNow(readClockNow())
+      setReadyQueue(action === 'switch_task' ? result.data.ready_queue || [] : [])
+      setResumeImpact(result.data.pause_review.requires_plan_adjustment ? result.data.pause_review : null)
+      setPauseProgress('')
+      setPauseTaskRemaining('')
+      setPauseNextStep('')
+      setPauseQuestions('')
+      setPauseReason('')
+      window.dispatchEvent(new CustomEvent('humanos:execution-updated', { detail: { action: 'pause', executionSession: result.data.execution_session } }))
+      await loadExecution()
+      setResumeImpact(null)
+      toast(t('execution.paused'))
+      if (result.data.planning_warning) toast.warning(result.data.planning_warning)
+      if (action === 'continue_later' && result.data.proposed_plan) router.push('/app/plan?adjust=continue-later')
+    } catch (error) {
+      toast(error instanceof Error ? error.message : t('execution.pauseFailed'))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const switchToReadyTask = async (candidate: ReadyQueueItem, confirmed = false) => {
+    setSubmitting(true)
+    try {
+      {
+        const impact = await checkExecutionImpact(candidate.execution_session_id)
+        if (impact.requires_plan_adjustment && (!confirmed || impact.confirmation_token !== switchImpact?.impact.confirmation_token)) { setSwitchImpact({ candidate, impact }); return }
+      }
+      await apiRequest('/api/execution-sessions/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ execution_session_id: candidate.execution_session_id, request_id: requestId('switch-task'), confirm_schedule_impact: confirmed, impact_confirmation_token: confirmed ? switchImpact?.impact.confirmation_token : undefined }) })
+      setSwitchImpact(null)
+      setReadyQueue([]); setPausePrompt(false); setPauseAction(null)
+      await loadExecution()
+      toast(locale === 'zh' ? `已切换到“${candidate.task_title}”` : `Switched to “${candidate.task_title}”`)
+    } catch (error) { toast.error(error instanceof Error ? error.message : t('execution.startFailed')) }
+    finally { setSubmitting(false) }
+  }
+
+  const takeBreak = async (minutes: number) => {
+    if (!session || !isActivelyRunning) return
+    setSubmitting(true)
+    try {
+      const activeMinutes = Math.max(Math.floor(elapsedSeconds / 60), 0)
+      const resumeAt = new Date(readClockNow() + minutes * 60_000).toISOString()
+      const result = await apiRequest<ExecutionResourceEnvelope<{ execution_session: ExecutionSession; pause_review: ExecutionImpact }>>('/api/execution-sessions/interrupt', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ execution_session_id: session.execution_session_id, interruption_action: 'short_break', actual_minutes: activeMinutes, remaining_minutes: displayRemaining, pause_reason: 'normal_break', resume_preference: 'soon', preferred_resume_at: resumeAt, break_minutes: minutes, request_id: requestId('break') }),
+      })
+      setCurrent({ mode: 'paused', session: result.data.execution_session, task })
+      window.dispatchEvent(new CustomEvent('humanos:execution-updated', { detail: { action: 'break', breakMinutes: minutes, executionSession: result.data.execution_session } }))
+      toast(locale === 'zh' ? `已开始 ${minutes} 分钟休息` : `${minutes}-minute break started`)
+    } catch (error) { toast(error instanceof Error ? error.message : t('execution.pauseFailed')) }
+    finally { setSubmitting(false) }
+  }
+
+  const askHumanOS = () => {
+    if (!session) return
+    router.push(`/app/check-in?mode=daily&source=help-decide&task_id=${encodeURIComponent(session.task_id)}`)
+  }
+
+  const endSession = async () => {
+    if (!session) return
+    setSubmitting(true)
+    try {
+      const minutes = Math.max(Math.ceil(elapsedSeconds / 60), Number(session.actual_minutes || 0))
+      const result = await apiRequest<ExecutionResourceEnvelope<{ execution_session: ExecutionSession }>>('/api/execution-sessions/end', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ execution_session_id: session.execution_session_id, actual_minutes: minutes, request_id: requestId('end') }),
+      })
+      setCurrent({ mode: 'session_ended', session: result.data.execution_session, task: result.data.execution_session.task || task })
+      window.dispatchEvent(new CustomEvent('humanos:execution-updated', { detail: { action: 'end', executionSession: result.data.execution_session } }))
+      toast(t('execution.ended'))
+    } catch (error) {
+      toast(error instanceof Error ? error.message : t('execution.endFailed'))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const submitFeedback = async () => {
+    if (!endedSession) return
+    setSubmitting(true)
+    try {
+      const result = await apiRequest<{ data: ExecutionFeedbackResult }>('/api/execution-feedback', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task_id: endedSession.task_id,
+          execution_session_id: endedSession.execution_session_id,
+          request_id: requestId('feedback'),
+          trigger: 'session_finished',
+          task_evaluation: {
+            completion,
+            actual_minutes: actualMinutes,
+            remaining_duration_minutes: completion === 'completed' ? 0 : remainingEdited ? remainingMinutes : undefined,
+            progress,
+            next_step: feedbackNextStep,
+            remaining_work: remainingWork,
+            perceived_difficulty: difficulty,
+          },
+          state_evaluation: { focus_after: focusAfter, energy_after: energyAfter, stress_after: stressAfter },
+          recommendation_evaluation: { timing_fit: timingFit, session_length_fit: sessionLengthFit },
+          schedule_action: scheduleAction,
+        }),
+      })
+      setEndedSession(null)
+      window.dispatchEvent(new CustomEvent('humanos:plan-updated', {
+        detail: { source: 'execution-feedback', task: result.data.task, executionSession: result.data.execution_session },
+      }))
+      await loadExecution()
+      toast(t('execution.feedbackSaved'))
+      if (result.data.requires_plan_adjustment) window.location.href = '/app/plan?adjust=remaining-work'
+    } catch (error) {
+      toast(error instanceof Error ? error.message : t('execution.feedbackFailed'))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const requestExecutionReplan = async () => {
+    if (!session) return
+    setSubmitting(true)
+    setReplanning(true)
+    try {
+      const accepted = await apiRequest<any>('/api/plans/replan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ scope: 'today', trigger: 'execution_delay', affected_task_ids: [session.task_id] }) })
+      const job = accepted?.data?.replan?.job || accepted?.replan?.job || accepted?.job
+      if (!job?.job_id) throw new Error(locale === 'zh' ? '后端没有创建重排任务' : 'The backend did not create a replan job')
+      let latest = job
+      for (let attempt = 0; attempt < 180 && !['completed', 'failed'].includes(String(latest.status)); attempt += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        const result = await apiRequest<any>(`/api/background-jobs?job_id=${encodeURIComponent(job.job_id)}`)
+        latest = result?.job || result?.data?.job || latest
+      }
+      if (latest.status !== 'completed') throw new Error(latest.error || (locale === 'zh' ? '今日计划重排失败' : 'Today replan failed'))
+      window.dispatchEvent(new CustomEvent('humanos:plan-revision'))
+      await loadExecution()
+      toast(locale === 'zh' ? '新的今日安排草案已生成，请确认后生效' : 'The revised draft is ready for confirmation')
+      setResumeImpact(null)
+      router.push('/app?review=replan')
+    } catch (error) { toast.error(error instanceof Error ? error.message : 'Replan failed') }
+    finally { setSubmitting(false); setReplanning(false) }
+  }
+
+  const resumeDeferred = async (deferred: ExecutionSession) => {
+    setSubmitting(true)
+    try {
+      const analysis = await apiRequest<ExecutionResourceEnvelope<{ impact: ExecutionImpact }>>('/api/execution-sessions/impact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ execution_session_id: deferred.execution_session_id, remaining_minutes: deferred.remaining_at_pause ?? deferred.session_remaining_minutes, action: 'resume' }) })
+      if (analysis.data.impact.requires_plan_adjustment) {
+        setCurrent({ mode: 'paused', session: deferred, task: deferred.task })
+        setResumeImpact(analysis.data.impact)
+        return
+      }
+      await apiRequest('/api/execution-sessions/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ execution_session_id: deferred.execution_session_id, request_id: requestId('resume-deferred') }) })
+      await loadExecution()
+      toast(t('execution.started'))
+    } catch (error) {
+      toast(error instanceof Error ? error.message : t('execution.startFailed'))
+    } finally { setSubmitting(false) }
+  }
+
+  const statusLabel = useMemo(() => t(`execution.mode_${current?.mode || 'none'}`), [current?.mode, t])
+
+  if (loading) return <LoadingSkeleton label={locale === 'zh' ? '正在同步执行状态…' : 'Loading execution state…'} />
+  if (loadError) return <div className="grid h-full place-items-center p-6"><Card role="alert"><CardHeader><CardTitle>{t('execution.loadFailed')}</CardTitle><CardDescription>{loadError}</CardDescription></CardHeader><CardContent><Button disabled={refreshing} onClick={() => void loadExecution()}>{locale === 'zh' ? '重新加载' : 'Retry'}</Button></CardContent></Card></div>
+
+  return (
+    <main className="humanos-page-enter humanos-operating-page h-full min-h-0 overflow-y-auto overscroll-contain px-4 pb-28 pt-6 md:px-8">
+      {switchImpact && <ExecutionImpactConfirmation impact={switchImpact.impact} locale={locale} busy={submitting} onConfirm={() => void switchToReadyTask(switchImpact.candidate, true)} onCancel={() => setSwitchImpact(null)} />}
+      {submitting && !replanning && <div className="mx-auto mb-5 max-w-6xl"><ProcessingNotice label={locale === 'zh' ? '正在更新执行状态…' : 'Updating execution state…'} /></div>}
+      {replanning && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 p-6 backdrop-blur-sm"><div className="w-full max-w-sm rounded-3xl border bg-card p-7 text-center shadow-2xl"><Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" /><h2 className="mt-4 text-lg font-semibold">{locale === 'zh' ? '正在重新安排今天' : 'Replanning today'}</h2><p className="mt-2 text-sm leading-6 text-muted-foreground">{locale === 'zh' ? '正在根据已完成时间、剩余工作和后续任务生成新的计划草案。完成后将返回日历。' : 'Building a revised draft from completed time, remaining work, and later sessions. You will return to the calendar when it is ready.'}</p></div></div>}
+      <div className="humanos-operating-container humanos-focus-container mx-auto max-w-6xl space-y-6">
+        <header>
+          <Link href="/app" className="mb-3 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="mr-1 h-4 w-4" />{t('execution.workspace')}</Link>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">HumanOS / Focus</p>
+          <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-end md:justify-between"><div><h1 className="text-3xl font-semibold tracking-tight md:text-5xl">{t('execution.title')}</h1><p className="mt-2 text-muted-foreground">{t('execution.subtitle')}</p></div><span className="inline-flex w-fit items-center gap-2 rounded-full border bg-background/70 px-4 py-1.5 text-sm">{refreshing && <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />}{refreshing ? (locale === 'zh' ? '正在同步' : 'Syncing') : statusLabel}</span></div>
+        </header>
+
+        {breakSession && <Card className="overflow-hidden border-sky-300 bg-gradient-to-br from-sky-50 via-background to-emerald-50"><CardHeader><div className="flex items-start justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-700">{locale === 'zh' ? '短暂休息' : 'Timed break'}</p><CardTitle className="mt-2">{breakFinished ? (locale === 'zh' ? '休息结束' : 'Break complete') : (locale === 'zh' ? '先离开屏幕一会儿' : 'Step away for a moment')}</CardTitle><CardDescription className="mt-1">{locale === 'zh' ? '任务上下文和计时状态已由后端保存，刷新页面不会丢失。' : 'Task context and timing are persisted by the backend and survive refreshes.'}</CardDescription></div><Clock3 className="h-6 w-6 text-sky-700" /></div></CardHeader><CardContent><div className="rounded-2xl border bg-background/80 p-6 text-center"><p className="font-mono text-5xl font-semibold tracking-tight">{durationLabel(breakRemainingSeconds)}</p><p className="mt-2 text-sm text-muted-foreground">{breakFinished ? (locale === 'zh' ? '可以回到原任务，或说明你还没准备好。' : 'Resume the same task or say you are not ready.') : (locale === 'zh' ? '休息剩余时间' : 'Break remaining')}</p></div>{breakFinished && <div className="mt-4 flex flex-wrap justify-center gap-2"><Button onClick={() => void resumeDeferred(breakSession)} disabled={submitting}><Play className="mr-2 h-4 w-4" />{locale === 'zh' ? '恢复原任务' : 'Resume task'}</Button><Button variant="outline" onClick={() => router.push(`/app/check-in?mode=daily&source=break-not-ready&task_id=${encodeURIComponent(breakSession.task_id)}`)}>{locale === 'zh' ? '我还没准备好' : "I'm not ready"}</Button></div>}</CardContent></Card>}
+
+        {overdueSessions.length > 0 && current?.mode !== 'overdue_running' && <Card className="border-amber-400 bg-amber-50 text-amber-950 shadow-lg shadow-amber-950/10 dark:border-amber-500/60 dark:bg-[#211a0d] dark:text-amber-50"><CardHeader><CardTitle>{locale === 'zh' ? '有超时执行记录待处理' : 'An overdue execution record needs review'}</CardTitle><CardDescription className="text-amber-900/70 dark:text-amber-100/70">{locale === 'zh' ? '它不再占据当前专注位置，但需由你确认实际结果。' : 'It no longer occupies the current focus slot, but its actual outcome still needs your confirmation.'}</CardDescription></CardHeader><CardContent className="space-y-2">{overdueSessions.map((item) => <div key={item.execution_session_id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-300 bg-white p-4 shadow-sm dark:border-amber-700/60 dark:bg-[#090e16]"><div><p className="font-medium">{item.task_title || item.title || item.task_id}</p><p className="text-xs text-amber-900/60 dark:text-amber-100/60">{item.planned_end_at ? new Date(item.planned_end_at).toLocaleString() : ''}</p></div><Button size="sm" variant="outline" className="border-amber-400 bg-white hover:bg-amber-100 dark:border-amber-600 dark:bg-[#111827] dark:hover:bg-amber-950" onClick={() => setCurrent({ mode: 'overdue_running', session: item, task: item.task, requires_resolution: true })}>{locale === 'zh' ? '处理记录' : 'Resolve record'}</Button></div>)}</CardContent></Card>}
+
+        {endedSession ? (
+          <Card className="border-primary/30">
+            <CardHeader><CardTitle>{t('execution.feedbackTitle')}</CardTitle><CardDescription>{t('execution.feedbackDescription')}</CardDescription></CardHeader>
+            <CardContent className="grid gap-5 md:grid-cols-2">
+              <label className="grid gap-2 text-sm"><span>{t('execution.completion')}</span><select className="h-10 rounded-md border bg-background px-3" value={completion} onChange={(event) => setCompletion(event.target.value as typeof completion)}><option value="completed">{t('execution.completed')}</option><option value="some_progress">{t('execution.partial')}</option><option value="no_progress">{t('execution.noProgress')}</option><option value="did_not_start">{t('execution.didNotStart')}</option></select></label>
+              <label className="grid gap-2 text-sm"><span>{t('execution.actualMinutes')}</span><input className="h-10 rounded-md border bg-background px-3" type="number" min={0} value={actualMinutes} onChange={(event) => setActualMinutes(Number(event.target.value))} /></label>
+              {completion !== 'completed' && <><label className="grid gap-2 text-sm"><span>{t('execution.remainingMinutes')}</span><input className="h-10 rounded-md border bg-background px-3" type="number" min={0} value={feedbackRemaining ?? ''} onChange={(event) => { setRemainingEdited(event.target.value !== ''); setRemainingMinutes(event.target.value === '' ? undefined : Number(event.target.value)) }} /><span className="text-xs text-muted-foreground">{locale === 'zh' ? '整个任务的剩余工作量；不修改时由后端按实际执行时间计算。' : 'Remaining work for the whole task; calculated from actual work unless you override it.'}</span></label><label className="grid gap-2 text-sm"><span>{t('execution.remainingWork')}</span><input className="h-10 rounded-md border bg-background px-3" value={remainingWork} onChange={(event) => setRemainingWork(event.target.value)} /></label></>}
+              <label className="grid gap-2 text-sm"><span>{t('execution.progress')}</span><input className="h-10 rounded-md border bg-background px-3" value={progress} onChange={(event) => setProgress(event.target.value)} /></label>
+              {completion !== 'completed' && <label className="grid gap-2 text-sm"><span>{t('execution.feedbackNextStep')}</span><input className="h-10 rounded-md border bg-background px-3" value={feedbackNextStep} onChange={(event) => setFeedbackNextStep(event.target.value)} /></label>}
+              {completion === 'completed' && actualMinutes < plannedMinutes && <label className="grid gap-2 text-sm md:col-span-2"><span>{t('execution.earlyFinishAction')}</span><select className="h-10 rounded-md border bg-background px-3" value={scheduleAction} onChange={(event) => setScheduleAction(event.target.value as typeof scheduleAction)}><option value="keep_time_free">{t('execution.keepTimeFree')}</option><option value="review_today">{t('execution.reviewToday')}</option></select></label>}
+              <label className="grid gap-2 text-sm"><span>{t('execution.difficulty')} {difficulty}/7</span><input type="range" min={1} max={7} value={difficulty} onChange={(event) => setDifficulty(Number(event.target.value))} /></label>
+              {[['focusAfter', focusAfter, setFocusAfter], ['energyAfter', energyAfter, setEnergyAfter], ['stressAfter', stressAfter, setStressAfter]].map(([key, value, setter]) => <label key={String(key)} className="grid gap-2 text-sm"><span>{t(`execution.${key}`)} {String(value)}/7</span><input type="range" min={1} max={7} value={Number(value)} onChange={(event) => (setter as (value: number) => void)(Number(event.target.value))} /></label>)}
+              <label className="grid gap-2 text-sm"><span>{t('execution.timingFit')}</span><select className="h-10 rounded-md border bg-background px-3" value={timingFit} onChange={(event) => setTimingFit(event.target.value)}><option value="good">{t('execution.good')}</option><option value="too_early">{t('execution.tooEarly')}</option><option value="too_late">{t('execution.tooLate')}</option></select></label>
+              <label className="grid gap-2 text-sm"><span>{t('execution.lengthFit')}</span><select className="h-10 rounded-md border bg-background px-3" value={sessionLengthFit} onChange={(event) => setSessionLengthFit(event.target.value)}><option value="appropriate">{t('execution.appropriate')}</option><option value="too_short">{t('execution.tooShort')}</option><option value="too_long">{t('execution.tooLong')}</option></select></label>
+              <div className="md:col-span-2"><Button className="w-full" onClick={submitFeedback} disabled={submitting}><CheckCircle2 className="mr-2 h-4 w-4" />{t('execution.saveFeedback')}</Button></div>
+            </CardContent>
+          </Card>
+        ) : session ? (
+          <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
+            <Card className="overflow-hidden border-primary/40 bg-white shadow-xl shadow-slate-950/10 dark:bg-[#111a28] dark:shadow-black/30">
+              <CardHeader className="bg-primary/5"><CardDescription>{statusLabel}</CardDescription><CardTitle className="text-2xl md:text-4xl">{title}</CardTitle></CardHeader>
+              <CardContent className="space-y-6 pt-6">
+                {current?.mode === 'overdue_running' && <div className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950"><p className="font-semibold">{locale === 'zh' ? '计划结束时间已过' : 'The planned end time has passed'}</p><p className="mt-1">{locale === 'zh' ? '系统不会猜测你是否完成。如果已停止，请结束 Session 并记录实际结果；如果仍在继续，可保持运行。' : 'HumanOS will not guess whether you finished. End the session and record the outcome if you stopped, or leave it running if you are still working.'}</p></div>}
+                {confirmedRemaining !== null && isActivelyRunning && <div role="status" className="rounded-2xl border border-primary/30 bg-primary/5 p-5 text-center"><p className="text-sm">{locale === 'zh' ? `本次已确认：${session?.confirmed_work_minutes} 分钟` : `Confirmed interval: ${session?.confirmed_work_minutes} min`}</p><p className="mt-2 font-mono text-3xl">{durationLabel(confirmedRemaining)}</p>{confirmedRemaining === 0 && <><p className="mt-2 text-sm">{locale === 'zh' ? '本次确认时长已到，计时仍在继续。请选择接下来的动作。' : 'Your confirmed interval is complete. Tracking continues until you choose what to do next.'}</p><div className="mt-3 flex flex-wrap justify-center gap-2"><Button onClick={() => setAdjustmentSessionId(session!.execution_session_id)} disabled={submitting}>{locale === 'zh' ? '复核下一段执行' : 'Review next interval'}</Button><Button variant="outline" onClick={() => { setPausePrompt(true); setPauseAction('short_break') }} disabled={submitting}>{locale === 'zh' ? '休息' : 'Take a break'}</Button><Button variant="outline" onClick={endSession} disabled={submitting}>{t('execution.end')}</Button></div></>}</div>}
+                <div className="rounded-2xl border bg-background p-6 text-center"><p className="font-mono text-5xl font-semibold tracking-tight md:text-7xl">{durationLabel(elapsedSeconds)}</p><p className="mt-2 text-sm text-muted-foreground">{t('execution.elapsed')}</p></div>
+                <div className="grid grid-cols-2 gap-3"><div className="rounded-xl bg-muted p-4"><p className="text-xs text-muted-foreground">{t('execution.planned')}</p><p className="mt-1 text-xl font-semibold">{plannedMinutes} min</p></div><div className="rounded-xl bg-muted p-4"><p className="text-xs text-muted-foreground">{t('execution.remaining')}</p><p className="mt-1 text-xl font-semibold">{displayRemaining} min</p></div></div>
+                {pausePrompt && <div className="rounded-2xl border bg-muted/40 p-5"><div className="flex items-center justify-between gap-3"><div><h3 className="font-semibold">{locale === 'zh' ? '你现在需要什么？' : 'What do you need right now?'}</h3><p className="mt-1 text-sm text-muted-foreground">{locale === 'zh' ? '先选择动作，系统只收集这个动作真正需要的信息。' : 'Choose an action first. HumanOS only asks for information that action needs.'}</p></div><Button variant="ghost" size="sm" onClick={() => { setPausePrompt(false); setPauseAction(null) }}>{locale === 'zh' ? '取消' : 'Cancel'}</Button></div><div className="mt-4 grid gap-2 sm:grid-cols-2">{([['short_break', locale === 'zh' ? '短暂休息' : 'Take a short break'], ['continue_later', locale === 'zh' ? '晚些时候继续' : 'Continue this task later'], ['switch_task', locale === 'zh' ? '切换到其他任务' : 'Switch to another task'], ['help_decide', locale === 'zh' ? '让 HumanOS 帮我决定' : 'Help me decide']] as const).map(([value, label]) => <button key={value} onClick={() => setPauseAction(value)} className={`rounded-2xl border p-4 text-left text-sm font-medium transition-colors ${pauseAction === value ? 'border-primary bg-primary/10' : 'bg-background hover:bg-muted'}`}>{label}</button>)}</div>{pauseAction === 'short_break' && <div className="mt-4 rounded-2xl border bg-background p-4"><p className="text-sm font-medium">{locale === 'zh' ? '休息多久？' : 'How long?'}</p><div className="mt-3 flex flex-wrap gap-2">{[5,10,15].map((minutes) => <Button key={minutes} variant="outline" onClick={() => void takeBreak(minutes)} disabled={submitting}>{minutes} {locale === 'zh' ? '分钟' : 'min'}</Button>)}</div></div>}{(pauseAction === 'continue_later' || pauseAction === 'switch_task') && <div className="mt-4 rounded-2xl border bg-background p-4"><label className="mb-3 grid gap-2 text-sm"><span>{locale === 'zh' ? '整个任务还需要多少分钟（可选）' : 'Remaining minutes for the whole task (optional)'}</span><input type="number" min={0} step={1} value={pauseTaskRemaining} onChange={(event) => setPauseTaskRemaining(event.target.value)} className="h-10 rounded-md border bg-background px-3" /><span className="text-xs text-muted-foreground">{locale === 'zh' ? '留空按实际执行时间计算；填写后更新任务剩余工作量，不改变本段计时。' : 'Leave blank to calculate from elapsed work; entering a value updates task remaining work, not this session timer.'}</span></label><RecoveryNoteInput value={pauseProgress} onChange={setPauseProgress} locale={locale} /><div className="mt-3"><RecoveryDetailsInput locale={locale} nextAction={pauseNextStep} onNextActionChange={setPauseNextStep} openQuestions={pauseQuestions} onOpenQuestionsChange={setPauseQuestions} reason={pauseReason} onReasonChange={setPauseReason} /></div>{pauseAction === 'continue_later' && <><div className="mt-4 grid gap-2 sm:grid-cols-3">{([['soon', locale === 'zh' ? '10 分钟后' : 'In 10 minutes'], ['later_today', locale === 'zh' ? '今天稍后' : 'Later today'], ['unknown', locale === 'zh' ? '暂不确定' : 'Not sure']] as const).map(([value, label]) => <button key={value} onClick={() => setResumePreference(value)} className={`rounded-xl border px-3 py-2 text-sm ${resumePreference === value ? 'border-primary bg-primary/10' : 'bg-background'}`}>{label}</button>)}</div>{resumePreference === 'later_today' && <input type="datetime-local" value={preferredResumeAt} onChange={(event) => setPreferredResumeAt(event.target.value)} className="mt-3 w-full rounded-xl border bg-background px-3 py-2" />}</>}<div className="mt-4 flex justify-end"><Button onClick={() => void pauseSession(pauseAction)} disabled={submitting || (pauseAction === 'continue_later' && resumePreference === 'later_today' && !preferredResumeAt)}><Pause className="mr-2 h-4 w-4" />{pauseAction === 'switch_task' ? (locale === 'zh' ? '保存并查看可切换任务' : 'Save and view ready tasks') : (locale === 'zh' ? '保存并暂停' : 'Save and pause')}</Button></div></div>}{pauseAction === 'help_decide' && <div className="mt-4 rounded-2xl border bg-background p-4"><p className="text-sm text-muted-foreground">{locale === 'zh' ? 'HumanOS 会询问中断原因和此刻的专注、精力、压力，再给出一个具体建议。' : 'HumanOS will ask why you stopped and collect current focus, energy, and stress before making one concrete recommendation.'}</p><Button className="mt-3" onClick={askHumanOS}>{locale === 'zh' ? '继续，让 HumanOS 帮我决定' : 'Continue to recommendation'}</Button></div>}</div>}
+                {current?.requires_resolution && current.mode !== 'overdue_running' && <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-center text-sm text-amber-950">{locale === 'zh' ? '开始下一项前，请先处理上方未结束的超时记录。' : 'Resolve the unfinished overdue record above before starting the next session.'}</p>}
+                <div className="flex flex-wrap justify-center gap-3">{isActivelyRunning ? <><Button variant="outline" onClick={() => { setPausePrompt(true); setPauseAction(null) }} disabled={submitting || pausePrompt}><Pause className="mr-2 h-4 w-4" />{t('execution.pause')}</Button><Button onClick={endSession} disabled={submitting}><Square className="mr-2 h-4 w-4" />{t('execution.end')}</Button></> : <><Button onClick={() => void startSession()} disabled={submitting || Boolean(current?.requires_resolution)} title={current?.requires_resolution ? (locale === 'zh' ? '请先处理超时记录' : 'Resolve overdue record first') : undefined}><Play className="mr-2 h-4 w-4" />{current?.mode === 'paused' ? t('execution.resume') : t('execution.start')}</Button>{current?.mode === 'paused' && <Button variant="outline" onClick={endSession} disabled={submitting}><Square className="mr-2 h-4 w-4" />{t('execution.end')}</Button>}</>}</div>
+                {resumeImpact && <div className="rounded-2xl border border-amber-300 bg-amber-50 p-5 text-amber-950"><h3 className="font-semibold">{locale === 'zh' ? '恢复任务将影响后续安排' : 'Resuming will affect your schedule'}</h3><p className="mt-2 text-sm">{locale === 'zh' ? `按当前剩余时间，预计在 ${new Date(resumeImpact.estimated_end_at).toLocaleTimeString()} 完成。` : `With the remaining work, this task is expected to finish at ${new Date(resumeImpact.estimated_end_at).toLocaleTimeString()}.`}</p><div className="mt-3 space-y-2">{resumeImpact.affected_sessions.map((affected) => <div key={affected.execution_session_id} className="rounded-xl bg-white/70 px-3 py-2 text-sm"><strong>{affected.task_title || affected.task_id}</strong><span className="ml-2">{locale === 'zh' ? `重叠 ${affected.overlap_minutes} 分钟` : `${affected.overlap_minutes} min overlap`}</span></div>)}</div><div className="mt-4 flex flex-wrap gap-2"><Button size="sm" variant="outline" onClick={() => void startSession(true)} disabled={submitting}>{locale === 'zh' ? '仍然恢复，保持原计划' : 'Resume without changes'}</Button><Button size="sm" onClick={() => void requestExecutionReplan()} disabled={submitting}>{locale === 'zh' ? '重新生成今日计划' : 'Regenerate today'}</Button><Button size="sm" variant="secondary" asChild><Link href="/app/plan?adjust=manual">{locale === 'zh' ? '我自己修改' : 'Edit manually'}</Link></Button><Button size="sm" variant="ghost" onClick={() => setResumeImpact(null)}>{locale === 'zh' ? '暂不恢复' : 'Not now'}</Button></div></div>}
+              </CardContent>
+            </Card>
+            <div className="space-y-4"><Card><CardHeader><CardTitle className="text-lg">{t('execution.context')}</CardTitle></CardHeader><CardContent className="space-y-3 text-sm"><p>{task?.context || t('execution.noContext')}</p>{typeof contextWindow.progress === 'string' && contextWindow.progress && <div className="rounded-xl border p-3"><p className="text-xs text-muted-foreground">{locale === 'zh' ? '上次留下的便签' : 'Saved recovery note'}</p><p className="mt-1 whitespace-pre-wrap">{contextWindow.progress}</p></div>}{nextStep && <div className="rounded-xl border border-primary/20 bg-primary/5 p-3"><p className="text-xs font-semibold text-primary">{t('execution.nextStep')}</p><p className="mt-1">{nextStep}</p></div>}</CardContent></Card><Card><CardHeader><CardTitle className="text-lg">{t('execution.schedule')}</CardTitle></CardHeader><CardContent className="space-y-2 text-sm"><p className="flex items-center gap-2"><Clock3 className="h-4 w-4" />{session.planned_start_at ? new Date(session.planned_start_at).toLocaleString() : '—'}</p><p className="flex items-center gap-2"><TimerReset className="h-4 w-4" />{plannedMinutes} min</p></CardContent></Card></div>
+          </div>
+        ) : (
+          <Card className="py-12 text-center"><CardContent><div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-muted"><Clock3 /></div><h2 className="text-xl font-semibold">{t('execution.noSession')}</h2><p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{t('execution.noSessionDescription')}</p><Button className="mt-5" asChild><Link href="/app/plan">{t('execution.openPlan')}</Link></Button></CardContent></Card>
+        )}
+
+        {adjustmentSessionId && <ExecutionAdjustment key={adjustmentSessionId} sessionId={adjustmentSessionId} locale={locale} onCheckpoint={() => void loadExecution()} onApplied={() => { setAdjustmentSessionId(null); void loadExecution() }} />}
+        {readyQueue.length > 0 && !isActivelyRunning && <Card><CardHeader><CardTitle>{locale === 'zh' ? '选择下一项任务' : 'Choose the next task'}</CardTitle><CardDescription>{locale === 'zh' ? '原任务的中断现场已保存。选择一项任务后开始执行。' : 'Your interruption context is saved. Choose a task to start.'}</CardDescription></CardHeader><CardContent><div className="mt-4 rounded-2xl border bg-background p-4"><p className="text-sm font-semibold">{locale === 'zh' ? '选择下一项任务' : 'Choose the next task'}</p><div className="mt-3 grid gap-2">{readyQueue.map((candidate) => <button key={candidate.execution_session_id} onClick={() => void switchToReadyTask(candidate)} disabled={submitting} className="flex items-center justify-between gap-3 rounded-xl border p-3 text-left hover:bg-muted disabled:opacity-50"><span><span className="block text-sm font-medium">{candidate.task_title}</span><span className="mt-1 block text-xs text-muted-foreground">{candidate.remaining_minutes ?? candidate.planned_work_minutes ?? 0} min · {candidate.priority || '—'}</span>{candidate.recovery_context?.next_action && <span className="mt-1 block text-xs text-muted-foreground">{locale === 'zh' ? '下一步：' : 'Next: '}{candidate.recovery_context.next_action}</span>}</span><Play className="h-4 w-4" /></button>)}</div></div><Button className="mt-3" variant="ghost" onClick={() => setReadyQueue([])}>{locale === 'zh' ? '稍后选择' : 'Choose later'}</Button></CardContent></Card>}
+        {(current?.deferred_sessions?.filter((item) => item.interruption_action !== 'short_break').length || 0) > 0 && <Card className="border-amber-300 bg-amber-50/60"><CardHeader><CardTitle>{locale === 'zh' ? '待恢复任务' : 'Deferred sessions'}</CardTitle><CardDescription>{locale === 'zh' ? '这些任务已退出当前执行队列，不会阻塞下一项安排。' : 'These sessions no longer block the next scheduled task.'}</CardDescription></CardHeader><CardContent className="space-y-3">{current?.deferred_sessions?.filter((item) => item.interruption_action !== 'short_break').map((item) => <div key={item.execution_session_id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-background p-4"><div><p className="font-medium">{item.task_title || item.title || item.task_id}</p><p className="mt-1 text-xs text-muted-foreground">{locale === 'zh' ? `剩余 ${item.remaining_at_pause ?? item.session_remaining_minutes ?? 0} 分钟 · ${item.pause_reason || '未填写暂停原因'}` : `${item.remaining_at_pause ?? item.session_remaining_minutes ?? 0} min remaining · ${item.pause_reason || 'No pause reason'}`}</p></div><div className="flex gap-2"><Button size="sm" variant="outline" onClick={() => void resumeDeferred(item)} disabled={submitting}>{locale === 'zh' ? '现在恢复' : 'Resume now'}</Button><Button size="sm" asChild><Link href="/app/plan?adjust=deferred-session">{locale === 'zh' ? '安排恢复时间' : 'Schedule return'}</Link></Button></div></div>)}</CardContent></Card>}
+        <Card><CardHeader><CardTitle>{t('execution.history')}</CardTitle><CardDescription>{t('execution.historyDescription')}</CardDescription></CardHeader><CardContent className="space-y-2">{history.length === 0 ? <p className="text-sm text-muted-foreground">{t('execution.noHistory')}</p> : history.slice(0, 12).map((item) => <div key={item.execution_session_id} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border p-3 text-sm"><div><p className="font-medium">{item.task_title || item.title || item.task_id}</p><p className="text-xs text-muted-foreground">{item.planned_start_at ? new Date(item.planned_start_at).toLocaleString() : item.block_id}</p></div><span className="rounded-full bg-muted px-3 py-1 text-xs">{item.status}</span></div>)}</CardContent></Card>
+      </div>
+    </main>
+  )
+}

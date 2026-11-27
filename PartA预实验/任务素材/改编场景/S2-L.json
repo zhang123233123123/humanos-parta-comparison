@@ -1,0 +1,140 @@
+{
+  "scenario_id": "S2-L",
+  "family_id": "S2",
+  "title": "考前复习日",
+  "constraint_condition": "宽松",
+  "material_type": "researcher_adapted_stimulus",
+  "pilot_status": "未预试",
+  "context": "为一门已学课程复习；题组、错题和笔记均提前提供，各项独立。",
+  "timezone": "Asia/Shanghai",
+  "day": "假设同一个工作日，不绑定实际日期",
+  "available_windows": [
+    {
+      "start": "09:00",
+      "end": "12:00"
+    },
+    {
+      "start": "13:00",
+      "end": "17:00"
+    }
+  ],
+  "reserved_periods": [
+    {
+      "start": "10:30",
+      "end": "10:45",
+      "label": "固定休息"
+    },
+    {
+      "start": "12:00",
+      "end": "13:00",
+      "label": "午休，不可用"
+    },
+    {
+      "start": "14:00",
+      "end": "14:15",
+      "label": "固定休息"
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "S2-01",
+      "title": "阅读复习笔记",
+      "deliverable": "阅读指定笔记并列出 5 个仍不熟悉的知识点。",
+      "estimated_minutes": 45,
+      "priority": "中",
+      "earliest_start": "09:00",
+      "deadline": "17:00",
+      "splittable": true,
+      "minimum_chunk_minutes": 15,
+      "depends_on": [],
+      "perceived_difficulty": null,
+      "source_activity": "study_reading",
+      "source_excerpt_ids": [
+        "E03"
+      ],
+      "provenance": "活动类别受 CalendarBench 启发；具体任务、交付物及所有数值和规则为研究者改编。"
+    },
+    {
+      "task_id": "S2-02",
+      "title": "完成模拟题组",
+      "deliverable": "完成一组模拟练习题，记录不确定的答案；不是固定考试。",
+      "estimated_minutes": 60,
+      "priority": "高",
+      "earliest_start": "09:00",
+      "deadline": "17:00",
+      "splittable": true,
+      "minimum_chunk_minutes": 15,
+      "depends_on": [],
+      "perceived_difficulty": null,
+      "source_activity": "quiz",
+      "source_excerpt_ids": [
+        "E02"
+      ],
+      "provenance": "活动类别受 CalendarBench 启发；具体任务、交付物及所有数值和规则为研究者改编。"
+    },
+    {
+      "task_id": "S2-03",
+      "title": "复习历史错题",
+      "deliverable": "重做 3 道之前的错题，并分别写下错误原因。",
+      "estimated_minutes": 45,
+      "priority": "中",
+      "earliest_start": "09:00",
+      "deadline": "17:00",
+      "splittable": true,
+      "minimum_chunk_minutes": 15,
+      "depends_on": [],
+      "perceived_difficulty": null,
+      "source_activity": "self-study",
+      "source_excerpt_ids": [
+        "E02"
+      ],
+      "provenance": "活动类别受 CalendarBench 启发；具体任务、交付物及所有数值和规则为研究者改编。"
+    },
+    {
+      "task_id": "S2-04",
+      "title": "进行专题练习",
+      "deliverable": "完成另一个专题的练习，并核对独立提供的参考答案。",
+      "estimated_minutes": 60,
+      "priority": "高",
+      "earliest_start": "09:00",
+      "deadline": "17:00",
+      "splittable": true,
+      "minimum_chunk_minutes": 15,
+      "depends_on": [],
+      "perceived_difficulty": null,
+      "source_activity": "self-study",
+      "source_excerpt_ids": [
+        "E02"
+      ],
+      "provenance": "活动类别受 CalendarBench 启发；具体任务、交付物及所有数值和规则为研究者改编。"
+    },
+    {
+      "task_id": "S2-05",
+      "title": "进行概念自测",
+      "deliverable": "根据既有知识清单自测，并标记后续需要复习的概念。",
+      "estimated_minutes": 30,
+      "priority": "低",
+      "earliest_start": "09:00",
+      "deadline": "17:00",
+      "splittable": true,
+      "minimum_chunk_minutes": 15,
+      "depends_on": [],
+      "perceived_difficulty": null,
+      "source_activity": "quiz",
+      "source_excerpt_ids": [
+        "E02"
+      ],
+      "provenance": "活动类别受 CalendarBench 启发；具体任务、交付物及所有数值和规则为研究者改编。"
+    }
+  ],
+  "rules": [
+    "仅在可用时间内排程；固定休息和午休不可安排任务；截止表示必须完成的最晚时间。",
+    "五项均需完成；优先级用于冲突取舍，不代表必须按高到低排序。",
+    "预计用时包括所列交付物；本轮先作为排程评价材料，并未要求实际完成所有学习内容。",
+    "每项可拆分，最小工作块 15 分钟；一次只安排一项任务；无跨任务先后依赖。",
+    "参与者报告感知难度及 Profile；不预填个人状态、不预设最优顺序。",
+    "录像可暂停；模拟题组是自练任务，非不可移动的正式考试。"
+  ],
+  "source_commit": "2c823c234d7c25bae7f603d74eb8fd7d522b7243",
+  "provenance": "参考 CalendarBench 活动类别后编写；不是原数据集导出的独立日程，不含真实参与者记录。"
+}
